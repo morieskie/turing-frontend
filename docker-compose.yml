@@ -1,0 +1,13 @@
+version: '3.5'
+services:
+  web:
+    container_name: turing-fe
+    build: .
+    environment:
+      - PORT=4200
+    ports:
+      - '1339:4200'
+    expose:
+      - '4200'
+    volumes:
+      - .:/usr/src/app

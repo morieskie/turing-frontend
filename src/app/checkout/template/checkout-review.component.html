@@ -1,0 +1,74 @@
+<h4>Review Your Order</h4>
+<hr class="padding-bottom-1x">
+<div class="table-responsive shopping-cart">
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Product Name</th>
+      <th class="text-center">Subtotal</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of model.items">
+      <td>
+        <div class="product-item">
+          <a class="product-thumb" [routerLink]="['/product', item.productId]">
+            <img src="./assets/img/product_images/{{item.image}}" alt="{{item.name}}">
+          </a>
+          <div class="product-info">
+            <h4 class="product-title">
+              <a [routerLink]="['/product', item.productId]">{{item.name}}
+                <small>x {{item.quantity}}</small>
+              </a>
+            </h4>
+            <span><em>Size:</em> {{item.attributes.split(',')[0]}}</span>
+            <span><em>Color:</em> {{item.attributes.split(', ')[1]}}</span>
+          </div>
+        </div>
+      </td>
+      <td class="text-center text-lg text-medium">{{item.subtotal| number : '1.2'}}</td>
+      <td class="text-center">
+        <a class="btn btn-outline-primary btn-sm" [routerLink]="['/cart']">Edit</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<div class="shopping-cart-footer">
+  <div class="column"></div>
+  <div class="column text-lg">Subtotal: <span class="text-medium">{{model.cartTotal | number : '1.2'}}</span></div>
+</div>
+<div class="row padding-top-1x mt-3">
+  <div class="col-sm-6">
+    <h5>ShippingModel to:</h5>
+    <ul class="list-unstyled">
+      <li *ngIf="currentUser.name"><span class="text-muted">Client:</span>{{currentUser.name}}</li>
+      <li *ngIf="address"><span class="text-muted">Address:</span>{{address}}</li>
+      <li *ngIf="currentUser.mob_phone"><span class="text-muted">Phone:</span>{{currentUser.mob_phone}}</li>
+    </ul>
+  </div>
+  <div class="col-sm-6">
+    <h5>Payment method:</h5>
+    <ul class="list-unstyled" *ngIf="cardNumber">
+      <li><span class="text-muted">Credit Card:</span>{{cardNumber}}</li>
+    </ul>
+  </div>
+</div>
+
+<div class="checkout-footer">
+  <div class="column">
+    <a class="btn btn-outline-secondary" [routerLink]="['../payment']">
+      <i class="icon-arrow-left"></i>
+      <span class="hidden-xs-down"> Back</span>
+    </a>
+  </div>
+  <div class="column">
+    <a class="btn btn-primary" (click)="onSubmit()">
+      <span class="hidden-xs-down">Continue&nbsp;</span>
+      <i class="icon-arrow-right"></i>
+    </a>
+  </div>
+</div>

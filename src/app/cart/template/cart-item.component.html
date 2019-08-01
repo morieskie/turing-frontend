@@ -1,0 +1,33 @@
+<table class="table table-cart">
+    <!--<thead class="thead-light">
+    <tr scope="row">
+        <th class="col">Description</th>
+        <th class="col-1">Price</th>
+        <th class="col-1">Quantity</th>
+        <th class="col-1">Total</th>
+    </tr>
+    </thead>-->
+    <tbody valign="middle">
+    <tr *ngFor="let item of items | async">
+        <td>
+            <a class="item-remove" (click)="onRemove(item)"><i class="ti-close"></i></a>
+        </td>
+        <td>
+            <h5 class="fw-600">{{item.description}}</h5>
+            <p>{{item.description}}</p>
+        </td>
+        <td>
+            <h6 class="price">{{item.getDisplayAmount()}}</h6>
+        </td>
+        <td>
+            <input class="form-control form-control-sm" type="text" placeholder="Quantity"
+                   (focus)="onFocus(item)"
+                   (change)="onChange(item)"
+                   [(ngModel)]="item.quantity"
+                   value="{{item.quantity}}">
+        </td>
+        <td class="text-right">
+            <h4 class="price">{{item.getDisplayTotal()}}</h4>
+        </td>
+    </tr>
+</table>

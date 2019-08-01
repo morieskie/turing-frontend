@@ -1,0 +1,161 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "turing-frontend": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/turing-frontend",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.app.json",
+            "aot": false,
+            "assets": [
+              "src/favicon.ico",
+              {
+                "glob": "**/*",
+                "input": "src/assets/",
+                "output": "/assets/"
+              }
+            ],
+            "styles": [
+              "src/assets/css/vendor.min.css",
+              "src/assets/css/card.min.css",
+              "node_modules/izitoast/dist/css/iziToast.min.css",
+              "node_modules/nouislider/distribute/nouislider.min.css",
+              "src/assets/css/styles.min.css",
+              "src/assets/customizer/customizer.min.css",
+              "src/styles.css"
+            ],
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              { "input": "node_modules/popper.js/dist/popper.min.js", "inject": false, "bundleName": "external-module" },
+              "src/assets/js/photoswipe.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.js",
+              "src/assets/js/jquery.downCount.js",
+              "node_modules/imagesloaded/imagesloaded.pkgd.js",
+              "node_modules/isotope-layout/dist/isotope.pkgd.min.js",
+              "node_modules/nouislider/distribute/nouislider.min.js",
+              "node_modules/owl.carousel/dist/owl.carousel.js",
+              "src/assets/js/OwlCarousel2-2.3.4/dist/owl.carousel.js",
+              "src/assets/js/photoswipe-ui-default.min.js",
+              "node_modules/velocity-animate/velocity.min.js",
+              "node_modules/velocity-animate/velocity.ui.min.js",
+              "src/assets/js/iziToast.js",
+              "src/assets/js/scripts.min.js",
+              "src/assets/customizer/customizer.min.js",
+              "src/assets/js/card.min.js"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "turing-frontend:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "turing-frontend:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "turing-frontend:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "src/test.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.spec.json",
+            "karmaConfig": "karma.conf.js",
+            "assets": [
+              "src/favicon.ico",
+              {
+                "glob": "**/*",
+                "input": "src/assets/",
+                "output": "/assets/"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/assets/fonts",
+                "output": "/../fonts"
+              }
+            ],
+            "styles": [
+              "src/styles.css",
+              "src/assets/css/vendor.min.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css"
+            ],
+            "scripts": [
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "tsconfig.app.json",
+              "tsconfig.spec.json",
+              "e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "e2e/protractor.conf.js",
+            "devServerTarget": "turing-frontend:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "turing-frontend:serve:production"
+            }
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "turing-frontend"
+}

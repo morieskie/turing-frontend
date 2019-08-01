@@ -1,0 +1,29 @@
+<nav class="pagination">
+  <div class="column text-left hidden-xs-down">
+    <a class="btn btn-outline-secondary btn-sm" [class.disabled]="pager.currentPage === 1"
+       (click)="setPage(pager.currentPage - 1, $event)"><i class="icon-arrow-left"></i>&nbsp;Previous</a>
+  </div>
+  <div class="column text-center">
+    <ul class="pages" *ngIf="pager&&pager.pages">
+      <li [class.disabled]="pager.currentPage === 1" class="page-item first-item d-none">
+        <a (click)="setPage(1, $event)" class="page-link d-none">First</a>
+      </li>
+      <li [class.disabled]="pager.currentPage === 1" class="page-item previous-item d-none">
+        <a (click)="setPage(pager.currentPage - 1)" class="page-link">Previous</a>
+      </li>
+      <li *ngFor="let page of pager.pages" [class.active]="pager.currentPage === page" class="page-item number-item">
+        <a (click)="setPage(page, $event)" class="page-link">{{page}}</a>
+      </li>
+      <li [class.disabled]="pager.currentPage === pager.totalPages" class="page-item next-item d-none">
+        <a (click)="setPage(pager.currentPage + 1)" class="page-link">Next</a>
+      </li>
+      <li [class.disabled]="pager.currentPage === pager.totalPages" class="page-item last-item">
+        <a (click)="setPage(pager.totalPages)" class="page-link d-none">Last</a>
+      </li>
+    </ul>
+  </div>
+  <div class="column text-right hidden-xs-down">
+    <a class="btn btn-outline-secondary btn-sm" [class.disabled]="pager.currentPage === pager.totalPages"
+       (click)="setPage(pager.currentPage + 1, $event)">Next&nbsp;<i class="icon-arrow-right"></i></a>
+  </div>
+</nav>

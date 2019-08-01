@@ -1,0 +1,168 @@
+.isotope-grid {
+  position: relative;
+  overflow: hidden
+}
+
+.isotope-grid:not(.filter-grid) {
+  min-height: 180px;
+  background-position: center;
+  /*background-image: url(../img/loading.gif);*/
+  background-repeat: no-repeat;
+  background-size: 74px
+}
+
+.isotope-grid:not(.filter-grid) > .grid-item {
+  display: none
+}
+
+.isotope-grid:not(.filter-grid)[style] {
+  background: none
+}
+
+.isotope-grid:not(.filter-grid)[style] > .grid-item {
+  display: inline-block;
+  -webkit-animation: showGrid .6s;
+  animation: showGrid .6s
+}
+
+.isotope-grid .gutter-sizer {
+  width: 30px
+}
+
+.isotope-grid .grid-item {
+  margin-bottom: 30px
+}
+
+.isotope-grid .grid-item .post-tile, .isotope-grid .grid-item .portfolio-tile {
+  margin-bottom: 0
+}
+
+.isotope-grid.cols-1 .gutter-sizer {
+  width: 0
+}
+
+.isotope-grid.cols-1 .grid-sizer, .isotope-grid.cols-1 .grid-item {
+  width: 100%
+}
+
+.isotope-grid.cols-2 .grid-sizer, .isotope-grid.cols-2 .grid-item {
+  width: calc((100% / 2) - 15px)
+}
+
+.isotope-grid.cols-3 .grid-sizer, .isotope-grid.cols-3 .grid-item {
+  width: calc((100% / 3) - 20px)
+}
+
+.isotope-grid.cols-4 .grid-sizer, .isotope-grid.cols-4 .grid-item {
+  width: calc((100% / 4) - 22.5px)
+}
+
+.isotope-grid.cols-5 .grid-sizer, .isotope-grid.cols-5 .grid-item {
+  width: calc((100% / 5) - 24px)
+}
+
+.isotope-grid.cols-6 .grid-sizer, .isotope-grid.cols-6 .grid-item {
+  width: calc((100% / 6) - 25px)
+}
+
+@media (max-width: 1200px) {
+  .isotope-grid.cols-6 .grid-sizer, .isotope-grid.cols-6 .grid-item, .isotope-grid.cols-5 .grid-sizer, .isotope-grid.cols-5 .grid-item, .isotope-grid.cols-4 .grid-sizer, .isotope-grid.cols-4 .grid-item, .isotope-grid.cols-3 .grid-sizer, .isotope-grid.cols-3 .grid-item {
+    width: calc((100% / 3) - 22.5px)
+  }
+}
+
+@media (max-width: 768px) {
+  .isotope-grid.cols-6 .grid-sizer, .isotope-grid.cols-6 .grid-item, .isotope-grid.cols-5 .grid-sizer, .isotope-grid.cols-5 .grid-item, .isotope-grid.cols-4 .grid-sizer, .isotope-grid.cols-4 .grid-item, .isotope-grid.cols-3 .grid-sizer, .isotope-grid.cols-3 .grid-item {
+    width: calc((100% / 2) - 15px)
+  }
+}
+
+@media (max-width: 576px) {
+  .isotope-grid.cols-6 .gutter-sizer, .isotope-grid.cols-5 .gutter-sizer, .isotope-grid.cols-4 .gutter-sizer, .isotope-grid.cols-3 .gutter-sizer, .isotope-grid.cols-2 .gutter-sizer {
+    width: 0
+  }
+
+  .isotope-grid.cols-6 .grid-sizer, .isotope-grid.cols-6 .grid-item, .isotope-grid.cols-5 .grid-sizer, .isotope-grid.cols-5 .grid-item, .isotope-grid.cols-4 .grid-sizer, .isotope-grid.cols-4 .grid-item, .isotope-grid.cols-3 .grid-sizer, .isotope-grid.cols-3 .grid-item, .isotope-grid.cols-2 .grid-sizer, .isotope-grid.cols-2 .grid-item {
+    width: 100%
+  }
+}
+
+.isotope-grid.grid-no-gap .gutter-sizer {
+  width: 0
+}
+
+.isotope-grid.grid-no-gap .grid-item {
+  margin-bottom: 0
+}
+
+.isotope-grid.grid-no-gap.cols-2 .grid-sizer, .isotope-grid.grid-no-gap.cols-2 .grid-item {
+  width: 50%
+}
+
+.isotope-grid.grid-no-gap.cols-3 .grid-sizer, .isotope-grid.grid-no-gap.cols-3 .grid-item {
+  width: 33.3333333333%
+}
+
+.isotope-grid.grid-no-gap.cols-4 .grid-sizer, .isotope-grid.grid-no-gap.cols-4 .grid-item {
+  width: 25%
+}
+
+.isotope-grid.grid-no-gap.cols-5 .grid-sizer, .isotope-grid.grid-no-gap.cols-5 .grid-item {
+  width: 20%
+}
+
+.isotope-grid.grid-no-gap.cols-6 .grid-sizer, .isotope-grid.grid-no-gap.cols-6 .grid-item {
+  width: 16.6666666667%
+}
+
+@media (max-width: 1200px) {
+  .isotope-grid.grid-no-gap.cols-6 .grid-sizer, .isotope-grid.grid-no-gap.cols-6 .grid-item, .isotope-grid.grid-no-gap.cols-5 .grid-sizer, .isotope-grid.grid-no-gap.cols-5 .grid-item, .isotope-grid.grid-no-gap.cols-4 .grid-sizer, .isotope-grid.grid-no-gap.cols-4 .grid-item, .isotope-grid.grid-no-gap.cols-3 .grid-sizer, .isotope-grid.grid-no-gap.cols-3 .grid-item {
+    width: 33.3333333333%
+  }
+}
+
+@media (max-width: 768px) {
+  .isotope-grid.grid-no-gap.cols-6 .grid-sizer, .isotope-grid.grid-no-gap.cols-6 .grid-item, .isotope-grid.grid-no-gap.cols-5 .grid-sizer, .isotope-grid.grid-no-gap.cols-5 .grid-item, .isotope-grid.grid-no-gap.cols-4 .grid-sizer, .isotope-grid.grid-no-gap.cols-4 .grid-item, .isotope-grid.grid-no-gap.cols-3 .grid-sizer, .isotope-grid.grid-no-gap.cols-3 .grid-item {
+    width: 50%
+  }
+}
+
+@media (max-width: 576px) {
+  .isotope-grid.grid-no-gap.cols-6 .grid-sizer, .isotope-grid.grid-no-gap.cols-6 .grid-item, .isotope-grid.grid-no-gap.cols-5 .grid-sizer, .isotope-grid.grid-no-gap.cols-5 .grid-item, .isotope-grid.grid-no-gap.cols-4 .grid-sizer, .isotope-grid.grid-no-gap.cols-4 .grid-item, .isotope-grid.grid-no-gap.cols-3 .grid-sizer, .isotope-grid.grid-no-gap.cols-3 .grid-item, .isotope-grid.grid-no-gap.cols-2 .grid-sizer, .isotope-grid.grid-no-gap.cols-2 .grid-item {
+    width: 100%
+  }
+}
+
+@-webkit-keyframes showGrid {
+  from {
+    opacity: 0
+  }
+  to {
+    opacity: 1
+  }
+}
+
+@keyframes showGrid {
+  from {
+    opacity: 0
+  }
+  to {
+    opacity: 1
+  }
+}
+
+@supports (-ms-ime-align: auto) {
+  .isotope-grid:not(.filter-grid) {
+    min-height: auto;
+    background: none
+  }
+
+  .isotope-grid:not(.filter-grid) > .grid-item {
+    display: inline-block
+  }
+
+  .isotope-grid:not(.filter-grid)[style] > .grid-item {
+    -webkit-animation: none;
+    animation: none
+  }
+}

@@ -1,0 +1,21 @@
+<section class="widget widget-order-summary" *ngIf="order">
+  <h3 class="widget-title">Order Summary</h3>
+  <table class="table">
+    <tr *ngIf="order.totalAmount">
+      <td>Cart Subtotal:</td>
+      <td class="text-medium">{{order.totalAmount | number: '1.2'}}</td>
+    </tr>
+    <tr *ngIf="shipping&&order.shippingCost">
+      <td>Shipping:</td>
+      <td class="text-medium">{{order.shippingCost || 0 | number: '1.2'}}</td>
+    </tr>
+    <tr *ngIf="order.estimatedTax ">
+      <td>Estimated tax:</td>
+      <td class="text-medium">{{order.estimatedTax | number: '1.2'}}</td>
+    </tr>
+    <tr *ngIf="order.checkoutTotal">
+      <td></td>
+      <td class="text-lg text-medium">{{order.checkoutTotal | number: '1.2'}}</td>
+    </tr>
+  </table>
+</section>

@@ -1,0 +1,165 @@
+<!-- Page Title-->
+<div class="page-title">
+  <div class="container">
+    <div class="column">
+      <h1>Login / Register Account</h1>
+    </div>
+    <div class="column">
+      <ul class="breadcrumbs">
+        <li><a [routerLink]="['/']">Home</a>
+        </li>
+        <li class="separator">&nbsp;</li>
+        <li><a [routerLink]="['/customer/orders']">Account</a>
+        </li>
+        <li class="separator">&nbsp;</li>
+        <li>Login / Register</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- Page Content-->
+<div class="container padding-bottom-3x mb-2">
+  <div class="row">
+    <div class="col-md-6">
+      <form class="login-box" method="post" #loginForm="ngForm" (ngSubmit)="submitLogin($event)">
+        <div class="row margin-bottom-1x">
+          <div class="col-xl-4 col-md-6 col-sm-4">
+            <a class="btn btn-sm btn-block facebook-btn" (click)="signInWithFB($event)">
+              <i class="socicon-facebook"></i>&nbsp;Facebook login</a>
+          </div>
+          <div class="col-xl-4 col-md-6 col-sm-4 d-none">
+            <a class="btn btn-sm btn-block twitter-btn" href="#">
+              <i class="socicon-twitter"></i>&nbsp;Twitter login</a>
+          </div>
+          <div class="col-xl-4 col-md-6 col-sm-4 d-none">
+            <a class="btn btn-sm btn-block google-btn" href="#">
+              <i class="socicon-googleplus"></i>&nbsp;Google+ login </a>
+          </div>
+        </div>
+        <h4 class="margin-bottom-1x">Or using form below</h4>
+        <div class="form-group input-group"
+             [class.has-danger]="username.invalid && (username.dirty || username.touched)"
+             [class.has-success]="username.valid && (username.dirty && username.touched)">
+          <input class="form-control" name="email" type="email" placeholder="Email"
+                 [(ngModel)]="loginModel.email" #username="ngModel"
+                 [class.form-control-danger]="username.invalid && (username.dirty || username.touched)"
+                 [class.form-contro-success]="username.valid && (username.dirty && username.touched)"
+                 pattern="^\w+([\.-]?\w+)+@\w+([\.:]?\w+)+(\.[a-zA-Z0-9]{2,3})+$" required>
+          <span class="input-group-addon"><i class="icon-mail"></i></span>
+        </div>
+        <div class="form-group input-group"
+             [class.has-warning]="password.invalid && (password.dirty || password.touched)">
+          <input class="form-control" name="passord" type="password" placeholder="Password"
+                 [(ngModel)]="loginModel.password" #password="ngModel"
+                 [class.form-control-warning]="password.invalid && (username.dirty || password.touched)"
+                 [class.form-control-success]="password.valid && (username.dirty && password.touched)" required>
+          <span class="input-group-addon"><i class="icon-lock"></i></span>
+        </div>
+        <div class="d-flex flex-wrap justify-content-between padding-bottom-1x">
+          <label class="custom-control custom-checkbox">
+            <input name="remember" class="custom-control-input" type="checkbox" [(ngModel)]="loginModel.remember"
+                   checked>
+            <span class="custom-control-indicator"></span>
+            <span class="custom-control-description">Remember me</span>
+          </label><a class="navi-link" href="account-password-recovery.html">Forgot password?</a>
+        </div>
+        <div class="text-center text-sm-right">
+          <button class="btn btn-primary margin-bottom-none" type="submit" [disabled]="!loginForm.form.valid">Login
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-6">
+      <div class="padding-top-3x hidden-md-up"></div>
+      <h3 class="margin-bottom-1x">No Account? Register</h3>
+      <p>Registration takes less than a minute but gives you full control over your orders.</p>
+      <form class="row" method="post" #registerForm="ngForm" (ngSubmit)="submitRegister($event)">
+        <div class="col-sm-6">
+          <div class="form-group"
+               [class.has-danger]="firstName.invalid && (firstName.dirty || firstName.touched)"
+               [class.has-success]="firstName.valid && (firstName.dirty && firstName.touched)">
+            <label for="reg-fn">First Name</label>
+            <input class="form-control" name="first_name" type="text" id="reg-fn"
+                   [(ngModel)]="registerModel.firstName"
+                   [class.form-control-danger]="firstName.invalid && (firstName.dirty || firstName.touched)"
+                   [class.form-control-success]="firstName.valid && (firstName.dirty && firstName.touched)"
+                   #firstName="ngModel" required>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group"
+               [class.has-danger]="lastName.invalid && (lastName.dirty || lastName.touched)"
+               [class.has-success]="lastName.valid && (lastName.dirty && lastName.touched)">
+            <label for="reg-ln">Last Name</label>
+            <input class="form-control" name="last_name" type="text" id="reg-ln" [(ngModel)]="registerModel.lastName"
+                   [class.form-control-danger]="lastName.invalid && (lastName.dirty || lastName.touched)"
+                   [class.form-control-success]="lastName.valid && (lastName.dirty && lastName.touched)"
+                   #lastName="ngModel" required>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group"
+               [class.has-danger]="emailAddress.invalid && (emailAddress.dirty || emailAddress.touched)"
+               [class.has-success]="emailAddress.valid && (emailAddress.dirty && emailAddress.touched)">
+            <label for="reg-email">E-mail Address</label>
+            <input class="form-control" name="email" type="email" id="reg-email"
+                   [(ngModel)]="registerModel.email"
+                   [class.form-control-danger]="emailAddress.invalid && (emailAddress.dirty || emailAddress.touched)"
+                   [class.form-control-success]="emailAddress.valid && (emailAddress.dirty && emailAddress.touched)"
+                   #emailAddress="ngModel" required>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group"
+               [class.has-danger]="phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched)"
+               [class.has-success]="phoneNumber.valid && (phoneNumber.dirty && phoneNumber.touched)">
+            <label for="reg-phone">Phone Number</label>
+            <input class="form-control" name="phone_number" type="tel" id="reg-phone"
+                   [(ngModel)]="registerModel.phoneNumber"
+                   [class.form-control-danger]="phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched)"
+                   [class.form-control-success]="phoneNumber.valid && (phoneNumber.dirty && phoneNumber.touched)"
+                   pattern="^[+]?(\d{1,2})?[\s.-]?\(?\d{2,3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$"
+                   #phoneNumber="ngModel" required>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group"
+               [class.has-danger]="registerPassword.invalid && (registerPassword.dirty || registerPassword.touched)"
+               [class.has-success]="registerPassword.valid && (registerPassword.dirty && registerPassword.touched)">
+            <label for="reg-pass">Password</label>
+            <input class="form-control" name="password" type="password" id="reg-pass"
+                   [(ngModel)]="registerModel.password"
+                   [class.form-control-danger]="registerPassword.invalid && (registerPassword.dirty || registerPassword.touched)"
+                   [class.form-control-success]="registerPassword.valid && (registerPassword.dirty && registerPassword.touched)"
+                   #registerPassword="ngModel" required>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group"
+               [class.has-warning]="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)"
+               [class.has-success]="confirmPassword.valid && (confirmPassword.dirty && confirmPassword.touched)"
+               [class.has-danger]="confirmPassword.valid &&confirmPassword.dirty && confirmPassword.touched&&registerPassword.value!==confirmPassword.value">
+            <label for="reg-pass-confirm">Confirm Password</label>
+            <input class="form-control" name="confirm_password" type="password" id="reg-pass-confirm"
+                   [(ngModel)]="registerModel.confirmPassword"
+                   [class.form-control-warning]="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)"
+                   [class.form-control-success]="confirmPassword.valid && confirmPassword.dirty && confirmPassword.touched && registerPassword.value!==confirmPassword.value"
+                   [class.form-control-danger]="confirmPassword.valid &&confirmPassword.dirty && confirmPassword.touched&&registerPassword.value!==confirmPassword.value"
+                   #confirmPassword="ngModel" required>
+            <div class="form-control-feedback"
+                 *ngIf="confirmPassword.valid &&confirmPassword.dirty && confirmPassword.touched&&registerPassword.value!==confirmPassword.value">
+              Must match password
+            </div>
+          </div>
+        </div>
+        <div class="col-12 text-center text-sm-right">
+          <button class="btn btn-primary margin-bottom-none" type="submit"
+                  (click)="submitRegister($event)"
+                  [disabled]="!registerForm.form.valid||(registerPassword.value!==confirmPassword.value)">
+            Register
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

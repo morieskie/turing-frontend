@@ -1,0 +1,28 @@
+<div class="gutter-sizer"></div>
+<div class="grid-sizer"></div>
+
+<!-- Product-->
+<div class="grid-item" *ngFor="let item of (items | async)">
+  <div class="product-card">
+    <div class="product-badge text-danger" *ngIf="item.discountedPrice!=0.00">
+      {{((item.price - item.discountedPrice) / item.price * 100).toFixed(0)}}% OFF
+    </div>
+    <div class="rating-stars"><i class="icon-star filled"></i><i class="icon-star filled"></i><i
+      class="icon-star filled"></i><i class="icon-star filled"></i><i class="icon-star"></i>
+    </div>
+    <a class="product-thumb" [routerLink]="['/product',item.productId]">
+      <img [src]="imagePath+item.thumbnail" [alt]="item.name" data-toggle="tooltip" [title]="item.description"></a>
+    <h3 class="product-title"><a [routerLink]="['/product',item.productId]">{{item.name}}</a></h3>
+    <h4 class="product-price">
+      <del *ngIf="item.discountedPrice!=0.00">{{item.price | number : '1.2'}}</del>
+      {{(item.discountedPrice == 0.00 ? item.price : item.discountedPrice) | number : '1.2'}}
+    </h4>
+    <div class="product-buttons">
+      <button class="btn btn-outline-secondary btn-sm btn-wishlist d-none" data-toggle="tooltip"
+              title="Whishlist"><i class="icon-heart"></i></button>
+      <button class="btn btn-outline-primary btn-sm"
+              (click)="onAddToCart($event,item)">Add to Cart
+      </button>
+    </div>
+  </div>
+</div>

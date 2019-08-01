@@ -1,0 +1,47 @@
+<div class="pane-group">
+    <div class="pane-sm sidebar">
+        <div class="padded-more">
+            <ul class="list-group">
+                <!--<li class="list-group-item" *ngFor="let drivesystemDataives" [class.selected]="drive === selectedDrive"
+                    (click)="onSelect(drive)">
+                    <div class="media-body">
+                        <strong>{{drive.manufacture}}</strong>
+                        <p>{{drive.capacity}}</p>
+                    </div>
+                </li>-->
+            </ul>
+        </div>
+    </div>
+    <div class="pane">
+        <div class="padded-more">
+            <h2>Order Preview</h2>
+            <form (ngSubmit)="onSubmit()" #formModel="ngForm">
+
+                <table class="table">
+                    <thead class="thead-light">
+                    <tr scope="row">
+                        <th scope="col">Description</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Price</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let item of items">
+                        <td scope="col">{{item.description}}</td>
+                        <td scope="col">{{item.quantity}}</td>
+                        <td scope="col" class="text-right">{{item.amount}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div class="row">
+                    <div class="form-group col-12">
+                        <button type="submit" id="get-started" class="btn btn-primary"
+                                [disabled]="!model">Proceed to Checkout
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

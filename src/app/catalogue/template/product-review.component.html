@@ -1,0 +1,40 @@
+<h5 class="mb-30 padding-top-1x">Leave Review</h5>
+<form class="row" method="post" (ngSubmit)="submitReview($event)" #form="ngForm">
+  <div class="col-sm-6" *ngIf="showName">
+    <div class="form-group">
+      <label for="review_name">Your Name</label>
+      <input class="form-control form-control-rounded" type="text" id="review_name" [(ngModel)]="formModel.name" >
+    </div>
+  </div>
+  <div class="col-sm-6" *ngIf="showEmail">
+    <div class="form-group">
+      <label for="review_email">Your Email</label>
+      <input class="form-control form-control-rounded" type="email" id="review_email"  [(ngModel)]="formModel.email" required>
+    </div>
+  </div>
+  <div class="col-sm-6" *ngIf="showSubject">
+    <div class="form-group">
+      <label for="review_subject">Subject</label>
+      <input class="form-control form-control-rounded" type="text" id="review_subject" [(ngModel)]="formModel.subject" required>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="form-group">
+      <label for="review_rating">Rating</label>
+      <select name="rating" class="form-control form-control-rounded" id="review_rating" [(ngModel)]="formModel.rating" required>
+        <option *ngFor="let option of formModel.ratingOptions" [value]="option.key">{{option.value}}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="col-sm-6"></div>
+  <div class="col-12">
+    <div class="form-group">
+      <label for="review_text">Review </label>
+      <textarea name="review" class="form-control form-control-rounded" id="review_text" rows="8" [(ngModel)]="formModel.review" required></textarea>
+    </div>
+  </div>
+  <div class="col-12 text-right">
+    <button class="btn btn-outline-primary" type="submit" [disabled]="!form.form.valid">Submit Review</button>
+  </div>
+</form>

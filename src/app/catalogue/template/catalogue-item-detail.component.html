@@ -1,0 +1,207 @@
+<!-- Page Title-->
+<div class="page-title">
+  <div class="container">
+    <div class="column">
+      <h1>Single Product</h1>
+    </div>
+    <div class="column">
+      <ul class="breadcrumbs">
+        <li><a href="index-2.html">Home</a>
+        </li>
+        <li class="separator">&nbsp;</li>
+        <li><a href="shop-grid-ls.html">Shop</a>
+        </li>
+        <li class="separator">&nbsp;</li>
+        <li>Single Product</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Page Content-->
+<div class="container padding-bottom-3x mb-1">
+  <div class="row">
+    <!-- Poduct Gallery-->
+    <div class="col-md-6">
+      <app-product-gallery *ngIf="modelLoaded" [model]="model|async"></app-product-gallery>
+    </div>
+    <!-- Product Info-->
+    <div class="col-md-6">
+      <app-product-info *ngIf="modelLoaded" [model]="model|async" [reviewCount]="reviewCount"
+                        [weightedAverage]="weightedAverage"
+                        [weightedAverageRounded]="weightedAverageRounded"></app-product-info>
+    </div>
+    <!-- Product Tabs-->
+    <div class="row padding-top-3x mb-3">
+      <div class="col-lg-10 offset-lg-1">
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" href="#description" data-toggle="tab" role="tab">Description</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#reviews" data-toggle="tab" role="tab">Reviews({{ this.reviewCount }})</a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane fade show active" id="description" role="tabpanel">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error blanditiis a, deserunt magnam pariatur
+              quam
+              suscipit quae. Veniam, deserunt reprehenderit quasi hic recusandae itaque omnis fugiat animi architecto
+              facilis repellendus. Commodi dolorem, eius consectetur. Amet maiores nemo at nobi s aspernatur velit,
+              sequi
+              odio, a veritatis inventore autem esse provident in? Placeat, sunt!</p>
+            <p class="mb-30">Iste assumenda, vitae, aliquam excepturi libero quia ullam quisquam tenetur id sint labore.
+              Pariatur praesentium velit, fugit facere maxime voluptates optio qui? Quidem obcaecati necessitatibus rem
+              aspernatur, mollitia, assumenda explicabo numquam minus eos sapiente totam dicta, laborum dolorum! Vitae
+              distinctio quos non ut fugiat.</p>
+            <div class="embed-responsive embed-responsive-16by9">
+              <iframe class="embed-responsive-item" src="http://www.youtube.com/embed/B81qd2v6alw?rel=0"
+                      allowfullscreen></iframe>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="reviews" role="tabpanel">
+            <!-- Review -->
+            <div class="comment" *ngFor="let review of reviews">
+              <div class="comment-author-ava"><img src="./assets/img/reviews/01.jpg" alt="Review author"></div>
+              <div class="comment-body">
+                <div class="comment-header d-flex flex-wrap justify-content-between">
+                  <h4 class="comment-title">Average quality for the price</h4>
+                  <div class="mb-2">
+                    <div class="rating-stars">
+                      <i *ngFor="let rating of [].constructor(5); let i = index"
+                         class="icon-star {{review.rating-i-1 >= 0?'filled':null}}"></i>
+                    </div>
+                  </div>
+                </div>
+                <p class="comment-text">{{review.review}}</p>
+                <div class="comment-footer"><span class="comment-meta">{{review.name}}</span></div>
+              </div>
+            </div>
+            <!-- Review Form-->
+            <app-product-review *ngIf="modelLoaded" [model]="model|async"></app-product-review>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Related Products Carousel-->
+  <h3 class="text-center padding-top-2x mt-2 padding-bottom-1x">You May Also Like</h3>
+  <!-- Carousel-->
+  <div class="owl-carousel"
+       data-owl-carousel="{ &quot;nav&quot;: false, &quot;dots&quot;: true, &quot;margin&quot;: 30, &quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:1},&quot;576&quot;:{&quot;items&quot;:2},&quot;768&quot;:{&quot;items&quot;:3},&quot;991&quot;:{&quot;items&quot;:4},&quot;1200&quot;:{&quot;items&quot;:4}} }">
+    <!-- Product-->
+    <div class="grid-item">
+      <div class="product-card">
+        <div class="product-badge text-danger">22% Off</div>
+        <a class="product-thumb" href="shop-single.html"><img src="./assets/img/shop/products/09.jpg"
+                                                              alt="Product"></a>
+        <h3 class="product-title"><a href="shop-single.html">Rocket Dog</a></h3>
+        <h4 class="product-price">
+          <del>$44.95</del>
+          $34.99
+        </h4>
+        <div class="product-buttons">
+          <button class="btn btn-outline-secondary btn-sm btn-wishlist" data-toggle="tooltip" title="Whishlist"><i
+            class="icon-heart"></i></button>
+          <button class="btn btn-outline-primary btn-sm" data-toast data-toast-type="success"
+                  data-toast-position="topRight" data-toast-icon="icon-circle-check" data-toast-title="Product"
+                  data-toast-message="successfuly added to cart!">Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Product-->
+    <div class="grid-item">
+      <div class="product-card">
+        <div class="rating-stars"><i class="icon-star filled"></i><i class="icon-star filled"></i><i
+          class="icon-star filled"></i><i class="icon-star filled"></i><i class="icon-star"></i>
+        </div>
+        <a class="product-thumb" href="shop-single.html"><img src="./assets/img/shop/products/03.jpg"
+                                                              alt="Product"></a>
+        <h3 class="product-title"><a href="shop-single.html">Oakley Kickback</a></h3>
+        <h4 class="product-price">$155.00</h4>
+        <div class="product-buttons">
+          <button class="btn btn-outline-secondary btn-sm btn-wishlist" data-toggle="tooltip" title="Whishlist"><i
+            class="icon-heart"></i></button>
+          <button class="btn btn-outline-primary btn-sm" data-toast data-toast-type="success"
+                  data-toast-position="topRight" data-toast-icon="icon-circle-check" data-toast-title="Product"
+                  data-toast-message="successfuly added to cart!">Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Product-->
+    <div class="grid-item">
+      <div class="product-card"><a class="product-thumb" href="shop-single.html"><img
+        src="./assets/img/shop/products/12.jpg" alt="Product"></a>
+        <h3 class="product-title"><a href="shop-single.html">Vented Straw Fedora</a></h3>
+        <h4 class="product-price">$49.50</h4>
+        <div class="product-buttons">
+          <button class="btn btn-outline-secondary btn-sm btn-wishlist" data-toggle="tooltip" title="Whishlist"><i
+            class="icon-heart"></i></button>
+          <button class="btn btn-outline-primary btn-sm" data-toast data-toast-type="success"
+                  data-toast-position="topRight" data-toast-icon="icon-circle-check" data-toast-title="Product"
+                  data-toast-message="successfuly added to cart!">Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Product-->
+    <div class="grid-item">
+      <div class="product-card">
+        <div class="rating-stars"><i class="icon-star filled"></i><i class="icon-star filled"></i><i
+          class="icon-star filled"></i><i class="icon-star filled"></i><i class="icon-star filled"></i>
+        </div>
+        <a class="product-thumb" href="shop-single.html"><img src="./assets/img/shop/products/11.jpg"
+                                                              alt="Product"></a>
+        <h3 class="product-title"><a href="shop-single.html">Top-Sider Fathom</a></h3>
+        <h4 class="product-price">$90.00</h4>
+        <div class="product-buttons">
+          <button class="btn btn-outline-secondary btn-sm btn-wishlist" data-toggle="tooltip" title="Whishlist"><i
+            class="icon-heart"></i></button>
+          <button class="btn btn-outline-primary btn-sm" data-toast data-toast-type="success"
+                  data-toast-position="topRight" data-toast-icon="icon-circle-check" data-toast-title="Product"
+                  data-toast-message="successfuly added to cart!">Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Product-->
+    <div class="grid-item">
+      <div class="product-card"><a class="product-thumb" href="shop-single.html"><img
+        src="./assets/img/shop/products/04.jpg" alt="Product"></a>
+        <h3 class="product-title"><a href="shop-single.html">Waist Leather Belt</a></h3>
+        <h4 class="product-price">$47.00</h4>
+        <div class="product-buttons">
+          <button class="btn btn-outline-secondary btn-sm btn-wishlist" data-toggle="tooltip" title="Whishlist"><i
+            class="icon-heart"></i></button>
+          <button class="btn btn-outline-primary btn-sm" data-toast data-toast-type="success"
+                  data-toast-position="topRight" data-toast-icon="icon-circle-check" data-toast-title="Product"
+                  data-toast-message="successfuly added to cart!">Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Product-->
+    <div class="grid-item">
+      <div class="product-card">
+        <div class="product-badge text-danger">50% Off</div>
+        <a class="product-thumb" href="shop-single.html"><img src="./assets/img/shop/products/01.jpg"
+                                                              alt="Product"></a>
+        <h3 class="product-title"><a href="shop-single.html">Unionbay Park</a></h3>
+        <h4 class="product-price">
+          <del>$99.99</del>
+          $49.99
+        </h4>
+        <div class="product-buttons">
+          <button class="btn btn-outline-secondary btn-sm btn-wishlist" data-toggle="tooltip" title="Whishlist"><i
+            class="icon-heart"></i></button>
+          <button class="btn btn-outline-primary btn-sm" data-toast data-toast-type="success"
+                  data-toast-position="topRight" data-toast-icon="icon-circle-check" data-toast-title="Product"
+                  data-toast-message="successfuly added to cart!">Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

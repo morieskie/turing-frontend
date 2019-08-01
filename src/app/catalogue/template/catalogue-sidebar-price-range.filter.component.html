@@ -1,0 +1,28 @@
+<!-- Widget Price Range-->
+<section class="widget widget-categories">
+  <h3 class="widget-title">Price Range</h3>
+  <form id="price-range-slider" class="price-range-slider" method="post" #priceRangeFormModel="ngForm"
+        (ngSubmit)="onPriceRangeSubmit($event)"
+        data-start-min="10"
+        data-start-max="50"
+        data-min="1"
+        data-max="100"
+        data-step="1">
+    <div class="ui-range-slider"></div>
+    <footer class="ui-range-slider-footer">
+      <div class="column">
+        <button class="btn btn-outline-primary btn-sm" type="submit">Filter</button>
+      </div>
+      <div class="column">
+        <div class="ui-range-values">
+          <div class="ui-range-value-min"><span></span>
+            <input name="min" type="hidden">
+          </div>&nbsp;-&nbsp;
+          <div class="ui-range-value-max"><span></span>
+            <input name="max" type="hidden">
+          </div>
+        </div>
+      </div>
+    </footer>
+  </form>
+</section>

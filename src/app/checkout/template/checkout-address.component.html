@@ -1,0 +1,85 @@
+<h4>Shipping Address</h4>
+<hr class="padding-bottom-1x">
+<form #addressForm="ngForm">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="form-group">
+        <label for="checkout-address1">Address 1</label>
+        <input name="address_1" class="form-control" type="text" id="checkout-address1"
+               [(ngModel)]="formModel.address1" required>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="form-group">
+        <label for="checkout-address2">Address 2</label>
+        <input name="address_2" class="form-control" type="text" id="checkout-address2"
+               [(ngModel)]="formModel.address2" required>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="form-group">
+        <label for="checkout-city">City</label>
+        <input name="city" class="form-control" type="text" id="checkout-city" [(ngModel)]="formModel.city" required>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="form-group">
+        <label for="checkout-region">Region</label>
+        <input name="region" class="form-control" type="text" id="checkout-region" [(ngModel)]="formModel.region"
+               required>
+      </div>
+    </div>
+  </div>
+  <div class="row padding-bottom-1x">
+    <div class="col-sm-6">
+      <div class="form-group">
+        <label for="checkout-country">Country</label>
+        <input name="country" class="form-control" type="text" id="checkout-country" [(ngModel)]="formModel.country"
+               required>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="form-group">
+        <label for="checkout-zip">ZIP Code</label>
+        <input name="postal_code" class="form-control" type="text" id="checkout-zip" [(ngModel)]="formModel.postalCode">
+      </div>
+    </div>
+  </div>
+  <div class="row padding-bottom-1x">
+    <div class="col-sm-6">
+      <div class="form-group">
+        <label for="checkout-shipping-region">ShippingModel Region</label>
+        <select name="shipping_region_id" class="form-control" id="checkout-shipping-region" #shippingRegionId="ngModel"
+                [(ngModel)]="formModel.shippingRegionId" required>
+          <option *ngFor="let item of shippingRegions"
+                  [value]="item.shippingRegionId"
+                  [disabled]="item.shippingRegionId===1">
+            {{item.shippingRegion}}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="col-sm-6">
+    </div>
+  </div>
+</form>
+
+<div class="checkout-footer">
+  <div class="column">
+    <a class="btn btn-outline-secondary" [routerLink]="['/cart' ]">
+      <i class="icon-arrow-left"></i>
+      <span class="hidden-xs-down"> Back To Cart</span>
+    </a>
+  </div>
+  <div class="column">
+    <a class="btn btn-primary"
+       [class.disabled]="(formModel.shippingRegionId == '') && addressForm.invalid"
+       (click)="onSubmit()">
+      <span class="hidden-xs-down">Continue&nbsp;</span>
+      <i class="icon-arrow-right"></i>
+    </a>
+  </div>
+</div>
+

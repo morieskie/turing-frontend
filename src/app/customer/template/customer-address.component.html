@@ -1,0 +1,121 @@
+<h4>Contact Address</h4>
+<hr class="padding-bottom-1x">
+<form class="row" #addressForm="ngForm">
+<!--  <div class="col-md-6">-->
+<!--    <div class="form-group">-->
+<!--      <label for="account-company">Company</label>-->
+<!--      <input class="form-control" type="text" id="account-company" value="Bets Company Ltd.">-->
+<!--    </div>-->
+<!--  </div>-->
+  <div class="col-md-6">
+    <div class="form-group"
+         [class.has-success]="country.valid && (country.dirty || country.touched)"
+         [class.has-danger]="country.invalid && (country.dirty || country.touched)">
+      <label for="account-country">Country</label>
+      <input name="country"
+             class="form-control"
+             type="text" id="account-country"
+             [(ngModel)]="formModel.country"
+             #country="ngModel"
+             required>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="form-group"
+         [class.has-succcess]="region.valid && (region.dirty || region.touched)"
+         [class.has-danger]="region.invalid && (region.dirty || region.touched)">
+      <label for="account-region">Region</label>
+      <input name="region"
+             class="form-control"
+             type="text"
+             id="account-region"
+             [(ngModel)]="formModel.region"
+             #region="ngModel"
+             required>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="form-group"
+         [class.has-success]="city.valid && (city.dirty || city.touched)"
+         [class.has-danger]="city.invalid && (city.dirty || city.touched)">
+      <label for="account-city">City</label>
+      <input name="city"
+             class="form-control"
+             type="text"
+             id="account-city"
+             #city="ngModel"
+             [(ngModel)]="formModel.city" required>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="form-group"
+         [class.has-success]="postalCode.valid && (postalCode.dirty || postalCode.touched)"
+         [class.has-danger]="postalCode.invalid && (postalCode.dirty || postalCode.touched)">
+      <label for="account-zip">ZIP Code</label>
+      <input
+        name="postal_code"
+        class="form-control"
+        type="text" id="account-zip"
+        #postalCode="ngModel"
+        [(ngModel)]="formModel.postalCode" required>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="form-group"
+         [class.has-success]="addressOne.valid && (addressOne.dirty || addressOne.touched)"
+         [class.has-danger]="addressOne.invalid && (addressOne.dirty || addressOne.touched)">
+      <label for="account-address1">Address 1</label>
+      <input name="address_1"
+             class="form-control"
+             type="text"
+             id="account-address1"
+             #addressOne="ngModel"
+             [(ngModel)]="formModel.address1" required>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="form-group"
+         [class.has-success]="addressTwo.valid && (addressTwo.dirty || addressTwo.touched)"
+         [class.has-danger]="addressTwo.invalid && (addressTwo.dirty || addressTwo.touched)">
+      <label for="account-address2">Address 2</label>
+      <input name="address_2"
+             class="form-control"
+             type="text"
+             id="account-address2"
+             #addressTwo="ngModel"
+             [(ngModel)]="formModel.address2">
+    </div>
+  </div>
+  <div class="col-12 padding-top-1x">
+    <h4>ShippingModel Address</h4>
+    <hr class="padding-bottom-1x">
+
+    <div class="col-md-6">
+      <div class="form-group"
+           [class.has-success]="shippingRegionId.valid && (shippingRegionId.dirty || shippingRegionId.touched)"
+           [class.has-danger]="shippingRegionId.invalid && (shippingRegionId.dirty || shippingRegionId.touched)">
+        <label for="account-shipping-region">Shipping Region</label>
+        <select name="shipping_region_id"
+                class="form-control"
+                id="account-shipping-region" #shippingRegionId="ngModel"
+                [(ngModel)]="formModel.shippingRegionId" required>
+          <option *ngFor="let item of shippingRegions"
+                  [value]="item.shippingRegionId"
+                  [disabled]="item.shippingRegionId===1">
+            {{item.shippingRegion}}
+          </option>
+        </select>
+      </div>
+    </div>
+<!--    <label class="custom-control custom-checkbox d-block">-->
+<!--      <input class="custom-control-input" type="checkbox" checked>-->
+<!--      <span class="custom-control-indicator"></span>-->
+<!--      <span class="custom-control-description">Same as Contact Address</span>-->
+<!--    </label>-->
+    <hr class="margin-top-1x margin-bottom-1x">
+    <div class="text-right">
+      <button class="btn btn-primary margin-bottom-none"
+              type="button" (click)="onSubmit()">Update Address</button>
+    </div>
+  </div>
+</form>

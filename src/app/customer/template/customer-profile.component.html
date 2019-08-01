@@ -1,0 +1,77 @@
+<form class="row" #profileFormModel="ngForm" (ngSubmit)="onSubmit()">
+  <div class="col-md-6">
+    <div class="form-group" [class.has-danger]="firstName.invalid && (firstName.dirty || firstName.touched)">
+      <label for="account-fn">First Name</label>
+      <input class="form-control" name="name" type="text" id="account-fn"
+             [(ngModel)]="formModel.name"
+             #firstName="ngModel" required>
+    </div>
+  </div>
+  <!--  <div class="col-md-6">-->
+  <!--    <div class="form-group">-->
+  <!--      <label for="account-ln">Last Name</label>-->
+  <!--      <input class="form-control" type="text" id="account-ln" value="Adams" required>-->
+  <!--    </div>-->
+  <!--  </div>-->
+  <div class="col-md-6">
+    <div class="form-group" [class.has-danger]="emailAddress.invalid && (emailAddress.dirty || emailAddress.touched)">
+      <label for="account-email">E-mail Address</label>
+      <input class="form-control" name="email" type="email" id="account-email" [(ngModel)]="formModel.email"
+             #emailAddress="ngModel" disabled>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="form-group" [class.has-warning]="mobDay.invalid && (mobDay.dirty || mobDay.touched)">
+      <label for="account-phone">Phone Number</label>
+      <input class="form-control" name="mob_phone" type="tel"
+             id="account-phone" [(ngModel)]="formModel.mobPhone"
+             pattern="^[+]?(\d{1,2})?[\s.-]?\(?\d{2,3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$"
+             #mobDay="ngModel">
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="form-group" [class.has-warning]="dayPhone.invalid && (dayPhone.dirty || dayPhone.touched)">
+      <label for="account-day-phone">Day Phone Number</label>
+      <input class="form-control" name="day_phone" type="tel"
+             id="account-day-phone" [(ngModel)]="formModel.dayPhone"
+             pattern="^[+]?(\d{1,2})?[\s.-]?\(?\d{2,3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$"
+             #dayPhone="ngModel">
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="form-group" [class.has-warning]="evePhone.invalid && (evePhone.dirty || evePhone.touched)">
+      <label for="account-eve-phone">Evening Phone Number</label>
+      <input class="form-control" name="eve_phone" type="tel"
+             id="account-eve-phone" [(ngModel)]="formModel.evePhone"
+             pattern="^[+]?(\d{1,2})?[\s.-]?\(?\d{2,3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$"
+             #evePhone="ngModel">
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="form-group">
+      <label for="account-pass">New Password</label>
+      <input class="form-control" name="password" type="password" id="account-pass" [(ngModel)]="formModel.password"
+             #password>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="form-group">
+      <label for="account-confirm-pass">Confirm Password</label>
+      <input class="form-control" type="password" id="account-confirm-pass"
+             [required]="password.value" #confirmPassword>
+    </div>
+  </div>
+  <div class="col-12">
+    <hr class="mt-2 mb-3">
+    <div class="d-flex flex-wrap justify-content-between align-items-center">
+      <label class="custom-control custom-checkbox d-block">
+        <input class="custom-control-input" type="checkbox" checked>
+        <span class="custom-control-indicator"></span>
+        <span class="custom-control-description">Subscribe me to Newsletter</span>
+      </label>
+      <button class="btn btn-primary margin-right-none" type="button" (click)="onSubmit()"
+              [disabled]="profileFormModel.invalid||(password.value!==confirmPassword.value)">Update Profile
+      </button>
+    </div>
+  </div>
+</form>

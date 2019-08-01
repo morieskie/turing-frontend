@@ -1,0 +1,18 @@
+<!-- Widget Categories-->
+<section class="widget widget-categories">
+  <h3 class="widget-title">Shop Categories</h3>
+  <ul>
+    <li [class.expanded]="isExpanded(item.departmentId)" [class.has-children]="item.items" *ngFor="let item of departments">
+      <a [routerLinkActive]="['active']"
+        [routerLink]="['/catalogue']" [queryParams]="{department: item.departmentId, category: null, page: 1}" queryParamsHandling="merge">
+        {{item.name}}
+      </a><span>({{item.items?item.items.length:0}})</span>
+      <ul *ngIf="item.items && item.items.length>0">
+        <li *ngFor="let subItem of item.items">
+          <a [routerLinkActive]="['active']"
+             [routerLink]="['/catalogue']" [queryParams]="{department: null, category: subItem.categoryId, page: 1}" queryParamsHandling="merge">{{subItem.name}}</a><span class="d-none">(180)</span>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</section>

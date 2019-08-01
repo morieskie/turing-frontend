@@ -1,0 +1,103 @@
+<h4>Choose Payment Method</h4>
+<hr class="padding-bottom-1x">
+  <div class="accordion" id="accordion" role="tablist">
+    <div class="card">
+      <div class="card-header" role="tab">
+        <h6><a href="#card" data-toggle="collapse" data-parent="#accordion"><i class="icon-columns"></i>Pay with
+          Credit Card</a></h6>
+      </div>
+      <div class="collapse show" id="card" role="tabpanel">
+        <div class="card-body">
+          <p>We accept following credit cards:&nbsp;
+            <img class="d-inline-block align-middle"
+                 src="./assets/img/credit-cards.png"
+                 style="width: 120px;" alt="Credit Cards">
+          </p>
+          <div class="card-wrapper"></div>
+          <form class="interactive-credit-card row" #cardForm="ngForm">
+            <div class="form-group col-sm-6">
+              <input class="form-control" type="text" name="number"
+                     placeholder="Card Number" maxlength="19"
+                     [(ngModel)]="model.cardNumber" required>
+            </div>
+            <div class="form-group col-sm-6">
+              <input class="form-control" type="text" name="name" placeholder="Full Name" [(ngModel)]="model.name" required>
+            </div>
+            <div class="form-group col-sm-3">
+              <input class="form-control" type="text" name="expiry" placeholder="MM/YY" [(ngModel)]="model.expiry" required>
+            </div>
+            <div class="form-group col-sm-3">
+              <input class="form-control" type="number" name="cvc" placeholder="CVC"
+                     pattern="[0-9]{3}" minlength="3" maxlength="3" min="0" max="999"
+                     [(ngModel)]="model.cvc" required>
+            </div>
+            <div class="col-sm-6">
+              <button class="btn btn-outline-primary btn-block margin-top-none" type="submit"
+                      (click)="onSubmit()"
+                      [class.disabled]="cardForm.invalid">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="card  d-none">
+      <div class="card-header" role="tab">
+        <h6><a class="collapsed" href="#paypal" data-toggle="collapse" data-parent="#accordion"><i
+          class="socicon-paypal"></i>Pay with PayPal</a></h6>
+      </div>
+      <div class="collapse" id="paypal" role="tabpanel">
+        <div class="card-body">
+          <p>PayPal - the safer, easier way to pay</p>
+          <form class="row" method="post">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <input class="form-control" type="email" placeholder="E-mail" required>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <input class="form-control" type="password" placeholder="Password" required>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="d-flex flex-wrap justify-content-between align-items-center"><a class="navi-link"
+                                                                                          href="#">Forgot
+                password?</a>
+                <button class="btn btn-outline-primary margin-top-none" type="submit">Log In</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="card  d-none">
+      <div class="card-header" role="tab">
+        <h6><a class="collapsed" href="#points" data-toggle="collapse" data-parent="#accordion"><i
+          class="icon-medal"></i>Redeem Reward Points</a></h6>
+      </div>
+      <div class="collapse" id="points" role="tabpanel">
+        <div class="card-body">
+          <p>You currently have<span class="text-medium"> 290</span> Reward Points to spend.</p>
+          <label class="custom-control custom-checkbox d-block">
+            <input class="custom-control-input" type="checkbox"><span class="custom-control-indicator"></span><span
+            class="custom-control-description">Use my Reward Points to pay for this order.</span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="checkout-footer">
+  <div class="column">
+    <a class="btn btn-outline-secondary" [routerLink]="['../shipping']">
+      <i class="icon-arrow-left"></i>
+      <span class="hidden-xs-down"> Back</span>
+    </a>
+  </div>
+  <div class="column">
+    <a class="btn btn-primary" [routerLink]="['../review' ]" [class.disabled]="cardForm.invalid">
+      <span class="hidden-xs-down">Continue&nbsp;</span>
+      <i class="icon-arrow-right"></i>
+    </a>
+  </div>
+</div>

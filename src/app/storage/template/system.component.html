@@ -1,0 +1,63 @@
+<div class="pane-group">
+    <div class="pane-sm sidebar">
+        <div class="padded-more">
+            <ul class="list-group">
+                <!--<li class="list-group-item" *ngFor="let drivesystemDataives" [class.selected]="drive === selectedDrive"
+                    (click)="onSelect(drive)">
+                    <div class="media-body">
+                        <strong>{{drive.manufacture}}</strong>
+                        <p>{{drive.capacity}}</p>
+                    </div>
+                </li>-->
+            </ul>
+        </div>
+    </div>
+    <div class="pane">
+        <div class="padded-more">
+            This is the dashboard
+
+            <ul class="list-group" *ngIf="systemData">
+                <li class="list-group-item">
+                    <div class="media-body">
+                        <strong>Manufacturer</strong>
+                        <p>
+                            <input [(ngModel)]="systemData.manufacturer" placeholder="capacity"/>
+                        </p>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="media-body">
+                        <strong>Model</strong>
+                        <p>
+                            <input [(ngModel)]="systemData.model" placeholder="capacity"/>
+                        </p>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="media-body">
+                        <strong>Serial</strong>
+                        <p>
+                            <input [(ngModel)]="systemData.serial" placeholder="capacity"/>
+                        </p>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="media-body">
+                        <strong>Uuid</strong>
+                        <p>
+                            <input [(ngModel)]="systemData.orderId" placeholder="capacity"/>
+                        </p>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="media-body">
+                        <strong>Version</strong>
+                        <p>
+                            <input [(ngModel)]="systemData.version" placeholder="capacity"/>
+                        </p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

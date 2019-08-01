@@ -1,0 +1,76 @@
+<!-- Off-Canvas Wrapper-->
+<div class="offcanvas-wrapper">
+  <!-- Page Title-->
+  <div class="page-title">
+    <div class="container">
+      <div class="column">
+        <h1>My Profile</h1>
+      </div>
+      <div class="column">
+        <ul class="breadcrumbs">
+          <li><a [routerLink]="['/']">Home</a>
+          </li>
+          <li class="separator">&nbsp;</li>
+          <li><a [routerLink]="['/customer/orders']">Account</a>
+          </li>
+          <li class="separator">&nbsp;</li>
+          <li>My Profile</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- Page Content-->
+  <div class="container padding-bottom-3x mb-2">
+    <div class="row">
+      <div class="col-lg-4">
+        <aside class="user-info-wrapper">
+          <div class="user-cover" style="background-image: url(./assets/img/account/user-cover-img.jpg);">
+            <div class="info-label" data-toggle="tooltip" title="You currently have 0 Reward Points to spend">
+              <i class="icon-medal"></i>0 points
+            </div>
+          </div>
+          <div class="user-info d-none">
+            <div class="user-avatar">
+              <a class="edit-avatar" href="#"></a>
+              <img src="./assets/img/account/user-ava.jpg" alt="User">
+            </div>
+            <div class="user-data">
+              <h4>{{customerName}}</h4><span>Joined February 06, 2017</span>
+            </div>
+          </div>
+        </aside>
+        <nav class="list-group">
+          <a class="list-group-item with-badge" [routerLink]="['/customer/orders']"
+             [routerLinkActive]="['active']">
+            <i class="icon-bag"></i>Orders
+            <span class="badge badge-primary badge-pill">{{ordersCount}}</span>
+          </a>
+          <a class="list-group-item" [routerLink]="['/customer/profile']"
+             [routerLinkActive]="['active']">
+            <i class="icon-head"></i>Profile
+          </a>
+          <a class="list-group-item" [routerLink]="['/customer/address']"
+             [routerLinkActive]="['active']">
+            <i class="icon-map"></i>Addresses
+          </a>
+          <a class="list-group-item with-badge d-none" [routerLink]="['/customer/wishlist']"
+             [routerLinkActive]="['active']">
+            <i class="icon-heart"></i>Wishlist
+            <span class="badge badge-primary badge-pill">3</span>
+          </a>
+          <a class="list-group-item with-badge d-none"
+             [routerLink]="['/customer/tickets']"
+             [routerLinkActive]="['active']">
+            <i class="icon-tag"></i>My Tickets
+            <span class="badge badge-primary badge-pill">4</span>
+          </a>
+        </nav>
+      </div>
+      <div class="col-lg-8">
+        <div class="padding-top-2x mt-2 hidden-lg-up"></div>
+
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>

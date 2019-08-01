@@ -1,0 +1,25 @@
+<div class="product-gallery">
+  <span class="product-badge text-danger" *ngIf="model.discountedPrice">
+    {{model.discountPercentage | number: '1.0'}}% OFF
+  </span>
+  <div class="gallery-wrapper">
+    <div class="gallery-item active">
+      <a [href]="productImageFolder+model.image" *ngIf="model.image" data-hash="one" data-size="1000x667"></a>
+    </div>
+    <div class="gallery-item">
+      <a [href]="productImageFolder+model.image2" *ngIf="model.image2" data-hash="two" data-size="1000x667"></a>
+    </div>
+  </div>
+  <div class="product-carousel owl-carousel">
+    <div data-hash="one" *ngIf="model.image"><img [src]="productImageFolder+model.image" alt="Product"></div>
+    <div data-hash="two" *ngIf="model.image2"><img [src]="productImageFolder+model.image2" alt="Product"></div>
+  </div>
+  <ul class="product-thumbnails" *ngIf="model.image || model.image2">
+    <li class="active" *ngIf="model.image">
+      <a [href]="['/product/'+model.productId+'#one']"><img src="{{productImageFolder+model.image}}" alt="Product"></a>
+    </li>
+    <li *ngIf="model.image2">
+      <a [href]="['/product/'+model.productId+'#two']"><img src="{{productImageFolder+model.image2}}" alt="Product"></a>
+    </li>
+  </ul>
+</div>

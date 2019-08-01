@@ -1,0 +1,5 @@
+.checkout-steps a {
+  cursor: not-allowed;
+  /*opacity: .55;*/
+  pointer-events: none;
+}
