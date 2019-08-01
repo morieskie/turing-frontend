@@ -5,13 +5,10 @@ import {ShippingMethodService} from './service/shipping-method.service';
 import {StorageService} from '../storage/service/storage.service';
 import {OrderService} from '../order/service/order.service';
 import {Order} from '../order/model/order';
-import {Cart} from '../cart/model/cart';
-import {OrderItem} from '../order/model/order-item';
-import {OrderItemService} from '../order/service/order-item.service';
 import {ShippingRegion} from './model/shipping-region';
 import {ShippingModel} from './model/shipping.model';
-import {TaxService} from "./service/tax.service";
-import {TaxModel} from "./model/tax.model";
+import {TaxService} from './service/tax.service';
+import {TaxModel} from './model/tax.model';
 
 @Component({
   templateUrl: './template/checkout-shipping.component.html',
@@ -24,8 +21,7 @@ export class CheckoutShippingComponent implements OnInit, AfterViewInit {
   public skipCreatingOrder: boolean;
   private tax: TaxModel;
 
-  constructor(private route: ActivatedRoute,
-              public router: Router,
+  constructor(public router: Router,
               public stepService: StepService,
               public storageService: StorageService,
               public shippingMethodService: ShippingMethodService,
@@ -38,14 +34,13 @@ export class CheckoutShippingComponent implements OnInit, AfterViewInit {
 
     this.storageService.getItem('order')
       .then(orderResponse => {
-        console.log('order instance from storage');
         const order: Order = new Order(orderResponse);
         order.shippingId = orderResponse.shippingId;
         this.order = order;
 
 
         this.shippingRegionId = this.order.customer.shippingRegionId;
-        console.log('this.shippingRegionId', this.shippingRegionId);
+
         this.shippingMethodService.getShippingRegions(this.shippingRegionId)
           .then(result => {
             this.models = result.map(item => new ShippingRegion(item));
@@ -91,7 +86,6 @@ export class CheckoutShippingComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    console.log('view init...');
     const pieces = location.pathname.split('/');
     this.stepService.setStatus(false);
     this.storageService.getItem('order').then(currentOrder => {
@@ -102,9 +96,5 @@ export class CheckoutShippingComponent implements OnInit, AfterViewInit {
     }).catch(() => {
 
     });
-    // this.stepService.getSteps().forEach(item => {
-    //   item.active = item.name === 'shipping';
-    //   this.stepService.setActiveStep(item);
-    // });
   }
 }

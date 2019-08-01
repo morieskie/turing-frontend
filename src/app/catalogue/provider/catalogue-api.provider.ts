@@ -8,19 +8,12 @@ export class CatalogueApiProvider implements CatalogueProviderInterface {
 
     public endpoint = 'products';
     public model: Promise<Catalogue> = Promise.resolve<Catalogue>(null);
-    public models: Promise<Catalogue[]> = Promise.resolve<Catalogue[]>(null);
 
     constructor(private client: RestService) {
     }
 
     collection(): Promise<Catalogue[]> {
-        // throw new Error("Method not implemented.");
-        const data: Catalogue[] = [{
-            id: 'ABC',
-            name: 'ABC',
-            description: 'ABC',
-            items: null
-        }];
+        const data: Catalogue[] = [];
 
         return Promise.resolve(data);
     }

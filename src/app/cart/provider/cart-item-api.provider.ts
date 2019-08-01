@@ -7,7 +7,6 @@ import {RestService} from '../../api/Rest.service';
 export class CartItemApiProvider implements CartItemProviderInterface {
 
   public endpoint = 'shoppingcart';
-  public cartItem: Promise<CartItem> = Promise.resolve<CartItem>(null);
 
   constructor(private client: RestService) {
   }
@@ -24,7 +23,6 @@ export class CartItemApiProvider implements CartItemProviderInterface {
         .create(`${this.endpoint}/add`, cartItem.toSnakeCase())
         .subscribe(response => {
           const items: CartItem[] = response.map(item => new CartItem(item));
-          // console.log('response', items, response)
           resolve(items);
         }, error => reject(error));
     });

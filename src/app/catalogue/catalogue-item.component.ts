@@ -1,15 +1,13 @@
 import {
-  AfterContentChecked,
   AfterViewInit,
   Component,
   EventEmitter,
-  Host,
   Inject,
   Input,
   OnInit,
   Output
 } from '@angular/core';
-import {ActivatedRoute, ParamMap} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {Observable, of} from 'rxjs';
 import {CatalogueComponent} from './catalogue.component';
 import {CatalogueService} from './service/catalogue.service';
@@ -18,17 +16,15 @@ import {CatalogueItem, CatalogueItemInterface} from './model/catalogue-item';
 import {NotificationService} from '../throbber/service/notification.service';
 import {CartItem} from '../cart/model/cart-item';
 import {CartService} from '../cart/service/cart.service';
-import {Cart} from "../cart/model/cart";
-import {environment} from "../../environments/environment";
-
-declare var jQuery;
+import {Cart} from '../cart/model/cart';
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-catalogue-item',
   templateUrl: './template/catalogue-item.component.html',
   styleUrls: []
 })
-export class CatalogueItemComponent implements OnInit, AfterViewInit {
+export class CatalogueItemComponent implements OnInit {
   @Input() public items: Observable<CatalogueItemInterface[]>;
   @Output() onHasItems = new EventEmitter<Observable<boolean>>();
 
@@ -80,17 +76,17 @@ export class CatalogueItemComponent implements OnInit, AfterViewInit {
               const size = document.querySelector('#sizeOption').value;
               // @ts-ignore
               const color = document.querySelector('#colorOption').value;
-
               const cartItem = new CartItem();
+
               cartItem.attributes = [size, color].join(', ');
               cartItem.productId = item.productId;
               cartItem.productName = item.name.toString();
+
               this.cartService.getCurrentCart().then(result => {
-                console.log('CURRENT_CART', result);
                 cartItem.cartId = result.cartId;
+
                 this.cartService.addToCart(cartItem)
-                  .then(response => {
-                    console.log('ADD TO CART RESPONSE', response);
+                  .then(() => {
                     this.notificationService.success('Success', `Product added to cart`);
                   });
               });
@@ -115,36 +111,7 @@ export class CatalogueItemComponent implements OnInit, AfterViewInit {
   public onRemove(item: CatalogueItem) {
     this.catalogueItemService.remove(item.id)
       .then(response => {
-        // this.catalogueService.refreshCart();
         console.log('CatalogueItemComponent.onRemove', response);
-        // console.log('CatalogueItemComponent.onRemove', this.cartService.getCurrentCart().items);
-        if (response) {
-          // this.items = Observable.of(this.cartService.getCurrentCart().items);
-          // this.onHasItems.emit(this.cartService.getCurrentCart().hasItems);
-        }
       });
-  }
-
-  public onFocus(item: CatalogueItem) {
-    this.model = item;
-  }
-
-  public onChange(item: CatalogueItem) {
-    console.log('item value has changed');
-    this.model.quantity = item.quantity;
-    // this.cartItemService.update(item).then(() => this.cartService.refreshCart());
-  }
-
-  ngAfterViewInit() {
-    console.log('CatalogueItemComponent.ngAfterViewInit');
-
-  }
-
-  ngAfterContentChecked() {
-    // console.log('CatalogueItemComponent.ngAfterContentChecked');
-  }
-
-  ngAfterContentInit() {
-    console.log('CatalogueItemComponent.ngAfterContentChecked');
   }
 }

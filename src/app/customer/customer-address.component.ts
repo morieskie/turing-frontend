@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Customer} from './model/customer';
 import {CustomerService} from './service/customer.service';
 import {Router} from '@angular/router';
@@ -59,7 +59,6 @@ export class CustomerAddressComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    console.log(this.formModel);
     this.addressService.update(this.formModel).then(result => {
       result.accessToken = this.customer.accessToken;
       this.storageService.setItem('currentUser', new Customer(result).toJson())

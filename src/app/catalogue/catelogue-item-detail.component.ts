@@ -1,7 +1,7 @@
-import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {CatalogueItemService} from './service/catalogue-item.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {CatalogueItem, CatalogueItemInterface} from './model/catalogue-item';
+import {ActivatedRoute} from '@angular/router';
+import {CatalogueItemInterface} from './model/catalogue-item';
 import {Observable, of} from 'rxjs';
 import {ReviewService} from './service/review.service';
 
@@ -37,7 +37,6 @@ export class CatalogueItemDetailComponent implements OnInit, AfterViewInit {
     this.catalogueItemService.show(this.productId).then(result => {
       const data = result;
       this.model = of(data);
-      console.log('TRANSFORMED MODEL', data);
       this.reviews = data.reviews;
       this.reviewCount = data.reviews.length;
       this.modelLoaded = of(true);

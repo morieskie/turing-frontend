@@ -1,5 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
-import {CategoryService} from './service/category.service';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {DepartmentService} from './service/department.service';
 import {DepartmentModel} from './model/department.model';
 import {ActivatedRoute} from '@angular/router';
@@ -12,12 +11,11 @@ import {ActivatedRoute} from '@angular/router';
 export class CatalogueSidebarCategoryFilterComponent implements OnInit, AfterViewInit {
   departments: DepartmentModel[];
   public department: number;
-  public isDepartment: boolean = false;
-  public isCategory: boolean = false;
+  public isDepartment = false;
+  public isCategory = false;
   public category: number;
 
-  constructor(private categoryService: CategoryService,
-              public departmentService: DepartmentService,
+  constructor(public departmentService: DepartmentService,
               public route: ActivatedRoute) {
 
     this.route.queryParams.subscribe(params => {
@@ -36,14 +34,14 @@ export class CatalogueSidebarCategoryFilterComponent implements OnInit, AfterVie
   ngOnInit(): void {
 
       // @ts-ignore
-      const k = $('.widget-categories .has-children > a');
+      const region = $('.widget-categories .has-children > a');
 
-      k.on('click', (b) => {
+      region.on('click', (category) => {
         // @ts-ignore
-        if ($(b.target).parent().is('.expanded')) {
-          k.parent().removeClass('expanded');
+        if ($(category.target).parent().is('.expanded')) {
+          region.parent().removeClass('expanded');
         } else {
-          k.parent().removeClass('expanded');
+          region.parent().removeClass('expanded');
           // @ts-ignore
           $(this).parent().addClass('expanded');
         }
@@ -54,15 +52,12 @@ export class CatalogueSidebarCategoryFilterComponent implements OnInit, AfterVie
     // console.log('id', id);
     let expand = false;
     if (this.isDepartment) {
-      // console.log('this.department', this.department);
       expand = String(this.department) === String(id);
     } else if (this.isCategory) {
       this.departments.forEach(item => {
         expand = false;
         if (item.items) {
-          // console.log('this.category', this.category);
-          expand = item.items
-            .filter(i => String(i.categoryId) === String(this.category)).length > 0;
+          expand = item.items.filter(i => String(i.categoryId) === String(this.category)).length > 0;
         }
       });
     }

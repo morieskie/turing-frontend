@@ -18,10 +18,8 @@ export class AuthService {
               public socialAuthService: SocialAuthService) {
     this.storageService.getItem(this.storageKey).then(response => {
       this.currentUserSubject.next(response);
-      console.log(response);
       this.currentUser = this.currentUserSubject.asObservable();
-    }).catch(error => {
-      console.log(error.toString());
+    }).catch(() => {
       this.currentUser = of(null);
       this.currentUserSubject = new BehaviorSubject<Customer>(null);
     });
@@ -47,12 +45,8 @@ export class AuthService {
         // store user details and jwt token in local storage to keep user logged in between page refreshes
         this.currentUserSubject.next(customer);
         this.storageService.setItem('currentUser', customer.toJson())
-          .then(result => console.log('USER SAVED TO LOCAL STORAGE', customer));
+          .then(() => console.log('USER SAVED TO LOCAL STORAGE', customer));
         return customer;
-      })
-      .then(response => {
-        this.currentUserSubject.next(response);
-        return response;
       });
   }
 
@@ -63,15 +57,10 @@ export class AuthService {
         Object.assign(data, response.customer);
         data.accessToken = response.accessToken;
         const customer: Customer = new Customer(data);
-        // store user details and jwt token in local storage to keep user logged in between page refreshes
         this.currentUserSubject.next(customer);
         this.storageService.setItem('currentUser', customer.toJson())
-          .then(result => console.log('USER SAVED TO LOCAL STORAGE', customer));
+          .then(() => console.log('USER SAVED TO LOCAL STORAGE', customer));
         return customer;
-      })
-      .then(response => {
-        this.currentUserSubject.next(response);
-        return response;
       });
   }
 
@@ -81,13 +70,12 @@ export class AuthService {
       .then(() => {
         this.socialAuthService.signOut().catch(error => console.log(error.message));
       })
-      .catch(() => {
-      });
-    this.storageService.removeItem('cardDetails').catch(() => {
-    });
-    this.storageService.removeItem('order').catch(() => {
-    });
-    // this.storageService.removeItem('currentCart').then(() => {});
+      .catch(() => {});
+
+    this.storageService.removeItem('cardDetails').catch(() => {});
+
+    this.storageService.removeItem('order').catch(() => {});
+
     this.currentUserSubject.next(null);
   }
 
@@ -99,14 +87,9 @@ export class AuthService {
         data.accessToken = response.accessToken;
         const customer: Customer = new Customer(data);
         this.currentUserSubject.next(customer);
-        // store user details and jwt token in local storage to keep user logged in between page refreshes
         this.storageService.setItem('currentUser', customer.toJson())
-          .then(result => console.log('USER SAVED TO LOCAL STORAGE', customer));
+          .then(() => console.log('USER SAVED TO LOCAL STORAGE', customer));
         return customer;
-      })
-      .then(response => {
-        this.currentUserSubject.next(response);
-        return response;
       });
   }
 

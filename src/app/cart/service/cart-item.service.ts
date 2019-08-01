@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {CartItem} from '../model/cart-item';
 import {CartItemRepository} from '../repository/cart-item.repository';
-import {CartItemApiProvider} from "../provider/cart-item-api.provider";
-import {RestService} from "../../api/Rest.service";
+import {CartItemApiProvider} from '../provider/cart-item-api.provider';
+import {RestService} from '../../api/Rest.service';
 
 @Injectable()
 export class CartItemService {
@@ -12,20 +12,6 @@ export class CartItemService {
 
   constructor(private repository: CartItemRepository, private restService: RestService) {
     this.items = [];
-  }
-
-  public getCollection(cartId: string | number): CartItem[] {
-    this.repository.collection(cartId)
-      .then(response => this.items = response);
-    return this.items;
-  }
-
-  public create(model: CartItem): Promise<CartItem[]> {
-    return this.repository.create(model);
-  }
-
-  public getRepository(): CartItemRepository {
-    return this.repository;
   }
 
   public getApiRepository(): CartItemRepository {

@@ -2,8 +2,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import {CatalogueItemInterface} from './model/catalogue-item';
 import {CartService} from '../cart/service/cart.service';
 import {CartItem} from '../cart/model/cart-item';
-import {NotificationService} from "../throbber/service/notification.service";
-import {Cart} from "../cart/model/cart";
+import {NotificationService} from '../throbber/service/notification.service';
+import {Cart} from '../cart/model/cart';
 
 @Component({
   selector: 'app-product-info',
@@ -38,17 +38,15 @@ export class ProductInfoComponent implements OnInit {
     // tslint:disable-next-line:radix
     const color = this.model.colors.filter((item) => item.key === parseInt(model.color))[0].value;
     model.attributes = [size, color].join(', ');
-    console.log(model);
+
     const cartItem = new CartItem();
     cartItem.attributes = model.attributes;
     cartItem.productId = this.model.productId;
     cartItem.productName = this.model.name.toString();
     this.cartService.getCurrentCart().then(result => {
-      console.log('CURRENT_CART', result);
       cartItem.cartId = result.cartId;
       this.cartService.addToCart(cartItem)
         .then(response => {
-          console.log('ADD TO CART RESPONSE', response);
           this.notificationService.success('Success', `Product added to cart`);
         });
     });

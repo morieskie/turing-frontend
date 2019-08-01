@@ -22,10 +22,7 @@ export class NumberedPaginationComponent implements OnInit, OnChanges {
   public pager: NumberedPagerInterface;
 
   constructor(private service: NumberPaginateService) {
-    console.log('Pagination.constructor', this.pages, this.initialPage, this.pageSize);
-    // this.pager = this.service.paginate(0, this.initialPage, this.pageSize, this.maxPages);
     this.pages.subscribe(next => {
-      console.log('Pagination UPDATE', next);
       this.items = next;
       if (next.length > 0) {
         this.setPage(this.initialPage);
@@ -42,9 +39,6 @@ export class NumberedPaginationComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log('Pagination.ngOnChanges.pages', this.pages);
-    console.log('Pagination.ngOnChanges.initialPage', this.initialPage);
-    console.log('Pagination.ngOnChanges.pageSize', this.pageSize);
     if (changes.pages && changes.pages.currentValue !== changes.pages.previousValue) {
       this.items = changes.pages.currentValue;
       this.pager = this.service.paginate(this.totalPages, this.initialPage, this.pageSize, this.maxPages);

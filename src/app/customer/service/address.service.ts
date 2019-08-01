@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {AddressModel} from '../../checkout/model/address.model';
 import {RestService} from '../../api/Rest.service';
 import {StorageService} from '../../storage/service/storage.service';
-import {Customer} from "../model/customer";
+import {Customer} from '../model/customer';
 
 @Injectable()
 export class AddressService {

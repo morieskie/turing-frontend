@@ -7,14 +7,14 @@ import {Order} from '../order/model/order';
 import {CartService} from '../cart/service/cart.service';
 import {Cart} from '../cart/model/cart';
 import {OrderService} from '../order/service/order.service';
-import {TaxService} from "./service/tax.service";
-import {TaxModel} from "./model/tax.model";
+import {TaxService} from './service/tax.service';
+import {TaxModel} from './model/tax.model';
 
 @Component({
   templateUrl: './template/checkout.component.html',
   styleUrls: ['./template/checkout.component.css']
 })
-export class CheckoutComponent implements OnInit, AfterViewInit {
+export class CheckoutComponent implements OnInit {
 
   public steps: StepInterface[];
   public order: Order;
@@ -22,8 +22,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   public shipping: any;
   public tax: TaxModel;
 
-  constructor(private route: ActivatedRoute,
-              public router: Router,
+  constructor(public router: Router,
               public stepService: StepService,
               public storageService: StorageService,
               public cartService: CartService,
@@ -43,8 +42,9 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
         this.order.totalAmount = this.cart.cartTotal;
         this.order.cart = this.cart;
         this.order.cartId = this.cart.cartId;
-        console.log('this.order.totalAmount', this.order.totalAmount);
+
         this.orderService.setCurrentOrder(this.order);
+
         this.storageService.getItem('shippingOptions').then(options => {
           this.shipping = options.filter(opt => opt.shippingId === orderItem.shippingId)[0];
           if (!this.shipping) {
@@ -59,12 +59,5 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.steps = this.stepService.getSteps();
-  }
-
-  ngAfterViewInit(): void {
-    // this.storageService.getItem('currentCart').then(response => {
-    //   this.cartId = response.cartId;
-    //   this.router.navigate(['/checkout', this.cartId, 'address']);
-    // });
   }
 }

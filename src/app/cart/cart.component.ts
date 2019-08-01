@@ -19,7 +19,7 @@ import {environment} from "../../environments/environment";
     './template/cart.component.css'
   ]
 })
-export class CartComponent implements OnChanges, OnInit, AfterViewInit {
+export class CartComponent implements OnInit, AfterViewInit {
   public model: Cart;
   public items: BehaviorSubject<CartItem[]> = new BehaviorSubject<CartItem[]>([]);
   public models: CartItem[];
@@ -42,7 +42,7 @@ export class CartComponent implements OnChanges, OnInit, AfterViewInit {
   }
 
   public onSubmit() {
-    // this.throbberService.activate();
+    this.throbberService.activate();
     const order: Order = new Order();
     order.createdOn = new Date().toISOString();
     order.shippedOn = null;
@@ -71,27 +71,20 @@ export class CartComponent implements OnChanges, OnInit, AfterViewInit {
     this.service.removeCartItems(this.model)
       .then(result => {
         if (result) {
-          this.notificationService.warning('Success', 'Cart has been cleared')
+          this.notificationService.warning('Success', 'Cart has been cleared');
         }
       });
-  }
-
-  public onHasItems(hasItems: Observable<boolean>) {
-    this.hasItems = hasItems;
   }
 
   ngOnInit(): void {
     this.service.getCartObservable().subscribe(value => {
       this.subtotal = 0.00;
-      console.log('CART HAS CHANGED', value);
       this.model = value;
-      console.log('CART HAS CHANGED', this.model.items.length > 0);
       this.items.next(this.model.items);
       this.hasItems = this.model.hasItems;
-      // this.model.items.forEach(item => this.subtotal += item.subtotal);
       this.model.items.forEach(item => this.subtotal += item.quantity * parseFloat(item.price));
-      // this.service.setCurrentCart(this.model);
     });
+
     this.subtotal = 0.00;
     this.hasItems = this.model.hasItems;
     this.items.next(this.model.items || []);
@@ -100,50 +93,53 @@ export class CartComponent implements OnChanges, OnInit, AfterViewInit {
     this.service.setCurrentCart(this.model);
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log('CartComponent.ngOnChanges');
-    console.log(changes);
-  }
-
   onDecrement($event, item) {
-    console.log($event.target.offsetParent.querySelector('input'));
     const effect = $event.target.offsetParent.querySelector('input');
     const qty = effect.value;
     const unitCost: number = parseFloat(item.subtotal) / item.quantity;
     this.subtotal = 0.00;
+
     if (!isNaN(qty) && qty > 1) {
       effect.value--;
     }
+
     item.quantity = effect.value;
     item.subtotal = item.quantity * unitCost;
-    this.model.items = this.model.items.map((value, index) => {
+    this.model.items = this.model.items.map((value) => {
+
       if (value.itemId === item.itemId) {
         value.subtotal = item.subtotal;
       }
+
       return value;
     });
+
     this.model.items.forEach(value => this.subtotal += parseFloat(String(value.subtotal)));
     this.items.next(this.model.items);
     return false;
   }
 
   onIncrement($event, item) {
-    console.log($event.target.offsetParent.querySelector('input'));
     const effect = $event.target.offsetParent.querySelector('input');
     const qty = effect.value;
     const unitCost: number = parseFloat(item.subtotal) / item.quantity;
     this.subtotal = 0.00;
+
     if (!isNaN(qty) && qty > 0) {
       effect.value++;
     }
+
     item.quantity = effect.value;
     item.subtotal = item.quantity * unitCost;
-    this.model.items = this.model.items.map((value, index) => {
+    this.model.items = this.model.items.map((value) => {
+
       if (value.itemId === item.itemId) {
         value.subtotal = item.subtotal;
       }
+
       return value;
     });
+
     this.model.items.forEach(value => this.subtotal += parseFloat(String(value.subtotal)));
     this.items.next(this.model.items);
     return false;
@@ -153,17 +149,22 @@ export class CartComponent implements OnChanges, OnInit, AfterViewInit {
     console.log(event, item);
     const qty = event;
     const unitCost: number = item.price;
+
     if (!isNaN(qty) && qty > 0) {
       item.quantity = qty;
       this.subtotal = 0.00;
     }
+
     item.subtotal = item.quantity * unitCost;
-    this.model.items = this.model.items.map((value, index) => {
+    this.model.items = this.model.items.map((value) => {
+
       if (value.itemId === item.itemId) {
         value.subtotal = item.subtotal;
       }
+
       return value;
     });
+
     this.model.items.forEach(value => this.subtotal += parseFloat(String(value.subtotal)));
     this.items.next(this.model.items);
     return false;
@@ -179,22 +180,21 @@ export class CartComponent implements OnChanges, OnInit, AfterViewInit {
   }
 
   onUpdateCart() {
-    // @ts-ignore
-    // if (typeof this.items.value !== 'undefined') {
-    //   return false;
-    // }
+
     // @ts-ignore
     if (Array.isArray(this.models)) {
       this.throbberService.activate();
       const totalPromises = this.models.length - 1;
       this.models.forEach((item, index) => {
+
         this.service.updateCartItem(item)
           .then(result => {
-            console.log(result);
+
             if (totalPromises === index) {
               this.notificationService.success('Success', 'Cart successfully updated');
               this.throbberService.deActivate();
             }
+
           }).catch(error => {
           console.log(error.message);
           this.notificationService.error('Error', error.message);
@@ -206,7 +206,6 @@ export class CartComponent implements OnChanges, OnInit, AfterViewInit {
   }
 
   goToCheckout() {
-    console.log('CART', this.model);
     this.service.setCurrentCart(this.model);
     this.router.navigate(['/checkout/' + this.model.cartId + '/address']);
   }

@@ -29,18 +29,16 @@ export class CatalogueComponent implements OnInit, AfterViewInit {
 
   constructor(private route: ActivatedRoute,
               public router: Router,
-              public catalogueService: CatalogueService,
-              public sanitizer: DomSanitizer,
-              public throbberService: ThrobberService,
               public catalogueItemService: CatalogueItemService,
               public cartService: CartService) {
-    console.log('Called Constructor');
+
     this.route.queryParams.subscribe(params => {
       this.params = {};
       Object.assign(this.params, params);
       const page = +params.page || 1;
       this.categoryId = +params.categoryId;
       this.currentPage = of(page);
+
       this.catalogueItemService.getCollection(this.params).then(result => {
         this.items = of(result.rows.map(item => new CatalogueItem(item)));
         this.hasItems = of(result.rows.length > 0);
@@ -54,7 +52,7 @@ export class CatalogueComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    console.log('CatalogueComponent.ngOnInit');
+
     this.cartService.getCurrentCart()
       .then(response => this.cart = response)
       .catch(() => this.cartService.create(new Cart())
@@ -62,9 +60,10 @@ export class CatalogueComponent implements OnInit, AfterViewInit {
   }
 
   onChangePage(page) {
+
     Object.assign(this.params, {page});
     return this.router.navigate(['catalogue'], {queryParams: this.params, queryParamsHandling: 'merge'})
-      .then(() => console.log('Pagination has been applied'));
+      .then(() => {});
   }
 
   initialiseGrid() {

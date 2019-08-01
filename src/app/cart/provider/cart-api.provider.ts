@@ -55,7 +55,7 @@ export class CartApiProvider implements CartProviderInterface {
         .subscribe(response => {
           const data: Cart = response.body.data;
           resolve(data);
-        });
+        }, error => reject(error));
     });
     return this.cart;
   }

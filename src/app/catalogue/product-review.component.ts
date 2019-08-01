@@ -3,8 +3,8 @@ import {ProductReview} from './model/product-review';
 import {CatalogueItemInterface} from './model/catalogue-item';
 import {CatalogueItemService} from './service/catalogue-item.service';
 import {ActivatedRouteSnapshot, Router, RouterState, RouterStateSnapshot} from '@angular/router';
-import {ReviewService} from "./service/review.service";
-import {NotificationService} from "../throbber/service/notification.service";
+import {ReviewService} from './service/review.service';
+import {NotificationService} from '../throbber/service/notification.service';
 
 @Component({
   selector: 'app-product-review',
@@ -33,23 +33,16 @@ export class ProductReviewComponent implements OnInit, AfterViewInit {
     console.log('ProductReviewComponent.ngAfterViewInit');
     // @ts-ignore
     window.initGallery();
-    // @ts-ignore
-    const jQuery = window.jQuery;
   }
 
   submitReview(event) {
+    event.preventDefault();
 
-    const state: RouterState = this.router.routerState;
-    const snapshot: RouterStateSnapshot = state.snapshot;
-    const root: ActivatedRouteSnapshot = snapshot.root;
-    console.log(event);
-    console.log(this.formModel);
     this.catalogueItemService.reviewProduct(this.model.productId, {
       rating: this.formModel.rating,
       review: this.formModel.review
     })
       .then(items => {
-        console.log('reviews update', items);
         this.reviewService.updateReviews(items);
         this.formModel.rating = null;
         this.formModel.review = null;
@@ -57,7 +50,7 @@ export class ProductReviewComponent implements OnInit, AfterViewInit {
       })
       .catch(error => {
         this.notificationService.error('Success', error.message);
-        console.log(error);
+        console.log(error.message);
       });
   }
 }

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
@@ -24,7 +24,7 @@ export class CatalogueSidebarPriceRangeFilterComponent implements OnInit, AfterV
   onPriceRangeSubmit(event) {
     this.min = event.target.querySelector('[name="min"]').value;
     this.max = event.target.querySelector('[name="max"]').value;
-    console.log('onPriceRangeSubmit', event, this.min, this.max);
+
     return this.router.navigate(['catalogue'], {
       queryParams: {min: this.min, max: this.max},
       queryParamsHandling: 'merge'
@@ -68,6 +68,5 @@ export class CatalogueSidebarPriceRangeFilterComponent implements OnInit, AfterV
         : (minValueWrapper.innerHTML = Math.round(c).toString(), minValue.value = Math.round(c));
     });
   }
-
 
 }

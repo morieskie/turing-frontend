@@ -22,17 +22,18 @@ export class CustomerComponent implements OnInit, OnDestroy {
     public storageService: StorageService,
     public router: Router,
     public customerService: CustomerService) {
-    console.log('CustomerComponent');
+
     this.storageService.getItem('currentUser')
       .then(item => {
         this.model = new Customer(item);
         this.customerName = this.model.name;
       });
+
     this.customerService.getCustomerObservable().subscribe(next => {
-      console.log('GETTING_NEW_CUSTOMER', next);
       this.customerName = next.name;
       this.modelSubject.next(new Customer(next));
     }, error => console.log(error.message));
+
     this.orderService.getOrders()
       .then(next => this.ordersCount = Array.isArray(next) ? next.length : 0);
   }
@@ -46,3 +47,4 @@ export class CustomerComponent implements OnInit, OnDestroy {
   onSubmit() {
   }
 }
+

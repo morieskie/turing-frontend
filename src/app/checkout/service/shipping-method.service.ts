@@ -24,7 +24,7 @@ export class ShippingMethodService {
             const regexp2 = new RegExp(/((?<duration>[a-zA-Z0-9\_\-\ ]+)|\ (?<type>[a-zA-Z0-9\ ]+)\((?<cost>[a-zA-Z0-9\_\-\$\ ]+)\))/);
             const pieces = shippingRegion.shippingType.match(regexp);
             const pieces2 = shippingRegion.shippingType.match(regexp2);
-            console.log('shippingRegion.shippingType', pieces);
+
             if (pieces) {
               shippingRegion.deliveryMethod = pieces.groups.type;
               shippingRegion.deliveryDuration = pieces.groups.duration;
@@ -32,6 +32,7 @@ export class ShippingMethodService {
               shippingRegion.deliveryMethod = pieces2.groups.type || '-';
               shippingRegion.deliveryDuration = pieces2.groups.duration;
             }
+
             return shippingRegion;
           });
           this.storageService.setItem('shippingOptions', shippingOptions.map(item => new ShippingRegion(item).toJson()))
@@ -44,7 +45,4 @@ export class ShippingMethodService {
     return this.shippingMethodSubject.asObservable();
   }
 
-  setShippingMethod(value: ShippingModel) {
-    this.shippingMethodSubject.next(value);
-  }
 }

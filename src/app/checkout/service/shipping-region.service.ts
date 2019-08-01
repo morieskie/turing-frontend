@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {RestService} from '../../api/Rest.service';
 import {StorageService} from '../../storage/service/storage.service';
-import {ShippingRegion} from "../model/shipping-region";
+import {ShippingRegion} from '../model/shipping-region';
 
 @Injectable()
 export class ShippingRegionService {
@@ -17,8 +17,8 @@ export class ShippingRegionService {
             .subscribe(response => {
               this.storageService.setItem('shippingRegions', response.map(item => new ShippingRegion(item).toJson()))
                 .then(result => resolve(result));
-            });
-          console.log('getShippingRegions: LocalStorage', error);
+            }, e => reject(e));
+          reject(error);
         });
     });
   }

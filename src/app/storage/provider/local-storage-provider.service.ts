@@ -27,11 +27,9 @@ export class LocalStorageProvider implements StorageProviderInterface {
       this.storage.setItem(key, data);
 
       try {
-        // console.log('this.storage.getItem(key)', this.storage.getItem(key))
         const result: any = JSON.parse(this.storage.getItem(key));
         resolve(result);
       } catch (e) {
-        // console.log('this.storage.getItem(key)', this.storage.getItem(key))
         reject(e);
       }
     });

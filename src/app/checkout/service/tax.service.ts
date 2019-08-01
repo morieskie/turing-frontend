@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {RestService} from '../../api/Rest.service';
 import {TaxModel} from '../model/tax.model';
-import {BehaviorSubject, Observable, of} from "rxjs";
+import {BehaviorSubject} from 'rxjs';
 
 @Injectable()
 export class TaxService {

@@ -10,8 +10,8 @@ import {Customer} from '../customer/model/customer';
 import {OrderService} from '../order/service/order.service';
 import {NotificationService} from '../throbber/service/notification.service';
 import {ThrobberService} from '../throbber/throbber.service';
-import {TaxService} from "./service/tax.service";
-import {TaxModel} from "./model/tax.model";
+import {TaxService} from './service/tax.service';
+import {TaxModel} from './model/tax.model';
 
 @Component({
   templateUrl: './template/checkout-review.component.html'
@@ -24,9 +24,7 @@ export class CheckoutReviewComponent implements OnInit {
   public cardNumber: string;
   private tax: TaxModel;
 
-  constructor(private route: ActivatedRoute,
-              public router: Router,
-              public stepService: StepService,
+  constructor(public router: Router,
               public cartService: CartService,
               public stripeService: StripePaymentService,
               public storageService: StorageService,
@@ -61,12 +59,15 @@ export class CheckoutReviewComponent implements OnInit {
           this.cardNumber = `**** **** **** ${ccNumber}`;
         }
       });
+
     this.cartService.getCurrentCart().then(response => {
       this.model = response;
       this.order.totalAmount = this.model.cartTotal;
       this.order.cartId = this.model.cartId;
       this.order.tax = this.tax;
-      this.storageService.setItem('order', this.order).then(() => this.orderService.setCurrentOrder(this.order));
+
+      this.storageService.setItem('order', this.order)
+        .then(() => this.orderService.setCurrentOrder(this.order));
     });
   }
 
@@ -74,18 +75,12 @@ export class CheckoutReviewComponent implements OnInit {
     this.throbberService.activate();
     this.order.taxId = 1;
     this.order.tax = this.tax;
-    console.log('Processing payment', this.order);
+
     try {
       this.orderService.create(this.order.toSnakeCase()).then(order => {
-        console.log('ORDER_FROM_API', order);
+
         this.order.orderId = order.orderId;
 
-        // let total = 0;
-        // this.model.items.forEach(item => total += parseFloat(String(item.subtotal)));
-        // if (!this.order.totalAmount || isNaN(this.order.totalAmount)) {
-        //   this.order.totalAmount = this.order.cart.totalAmount;
-        // }
-        console.log('this.order.checkoutTotal', this.order.checkoutTotal * 100);
         this.stripeService.charge({
           stripeToken: this.order.stripeToken,
           order_id: this.order.orderId,
@@ -96,6 +91,7 @@ export class CheckoutReviewComponent implements OnInit {
           this.storageService.removeItem('cardDetails').then(() => console.log('Card has been removed'));
           this.storageService.removeItem('order').then(() => console.log('Order has been removed'));
           this.storageService.removeItem('currentCart').then(() => this.cartService.refreshCart());
+
           this.notificationService.success('Success', 'Order successfully placed', {
             onClosing: () => {
               this.throbberService.deActivate();

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Host, Inject, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
 import {CartItem} from './model/cart-item';
 import {CartItemService} from './service/cart-item.service';
 import {ActivatedRoute} from '@angular/router';
@@ -34,8 +34,6 @@ export class CartItemComponent implements OnInit {
       .then(response => {
         this.cartService.refreshCart();
         this.cartService.getCurrentCart().then(result => {
-          console.log('CartItemComponent.onRemove', result);
-          console.log('CartItemComponent.onRemove', result.items);
           if (response) {
             this.items = of(result.items);
             this.onHasItems.emit(result.hasItems);
@@ -49,7 +47,6 @@ export class CartItemComponent implements OnInit {
   }
 
   public onChange(item: CartItem) {
-    console.log('item value has changed');
     this.model.quantity = item.quantity;
     this.cartItemService.update(item).then(() => this.cartService.refreshCart());
   }

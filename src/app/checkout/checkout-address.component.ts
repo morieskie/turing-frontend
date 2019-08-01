@@ -25,8 +25,7 @@ export class CheckoutAddressComponent implements OnInit, AfterViewInit {
   public cart: Cart;
   private tax: TaxModel;
 
-  constructor(private route: ActivatedRoute,
-              public router: Router,
+  constructor(public router: Router,
               public storageService: StorageService,
               public shippingRegionService: ShippingRegionService,
               public stepService: StepService,
@@ -46,7 +45,6 @@ export class CheckoutAddressComponent implements OnInit, AfterViewInit {
     this.storageService.getItem('currentUser').then(response => {
       this.customer = new Customer(response);
       const data = this.customer.toJson();
-      console.log('customer', data);
       this.formModel.address1 = data.address1;
       this.formModel.address2 = data.address2;
       this.formModel.city = data.city;
@@ -54,7 +52,7 @@ export class CheckoutAddressComponent implements OnInit, AfterViewInit {
       this.formModel.country = data.country;
       this.formModel.postalCode = data.postalCode;
       this.formModel.shippingRegionId = data.shippingRegionId === 1 ? '' : data.shippingRegionId;
-      if (parseInt(this.formModel.shippingRegionId) > 1) {
+      if (parseFloat(this.formModel.shippingRegionId) > 1) {
         this.stepService.setStatus(true);
       }
     });
@@ -69,15 +67,12 @@ export class CheckoutAddressComponent implements OnInit, AfterViewInit {
     this.orderService.getCurrentOrder().then(order => {
       this.order = new Order(order);
       this.order.tax = this.tax;
-      console.log('CheckoutAddressComponent.constructor');
       this.orderService.setCurrentOrder(this.order);
-      console.log('order', this.order);
     }).catch(() => this.setCurrentCreateOrder());
 
     this.stepService.getSteps().forEach(item => {
       item.active = item.name === 'address';
       if (item.active) {
-        console.log('changing', item);
         this.stepService.setActiveStep(item);
       }
     });
@@ -85,21 +80,20 @@ export class CheckoutAddressComponent implements OnInit, AfterViewInit {
 
   onSubmit() {
     this.setCurrentCreateOrder();
-    console.log(this.formModel, this.order);
     this.addressService.update(this.formModel).then(result => {
       const pieces = location.pathname.split('/');
       const data: Customer = new Customer(result);
-      console.log('After submit', data.toJson());
       data.accessToken = this.customer.accessToken;
       this.order.customer = data.toJson();
       this.order.tax = this.tax;
+
       this.storageService.setItem('order', this.order)
-        .then(res => {
-          console.log('Order saved');
+        .then(() => {
           this.orderService.setCurrentOrder(this.order);
         });
+
       this.storageService.setItem('currentUser', data.toJson())
-        .then(res => {
+        .then(() => {
           this.router.navigate(['checkout', pieces[2], 'shipping']);
         });
 
@@ -108,16 +102,15 @@ export class CheckoutAddressComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    console.log('view init...');
     this.stepService.setStatus(false);
   }
 
   public setCurrentCreateOrder() {
     this.orderService.getCurrentOrder().then(order => {
       this.order = new Order(order);
-      console.log('CheckoutAddressComponent.constructor');
+
       this.orderService.setCurrentOrder(this.order);
-      console.log('order', this.order);
+
     }).catch(() => this.orderService.setCurrentOrder(new Order({
       customer: this.customer.toJson(),
       totalAmount: this.cart.cartTotal,

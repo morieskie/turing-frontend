@@ -14,8 +14,7 @@ export class CatalogueItemApiProvider implements CatalogueItemProviderInterface 
   public model: Promise<CatalogueItem> = Promise.resolve<CatalogueItem>(null);
   public models: Promise<CatalogueItem[]> = Promise.resolve<CatalogueItem[]>(null);
 
-  constructor(private client: RestService,
-              public sanitizer: DomSanitizer) {
+  constructor(private client: RestService) {
   }
 
   collection(options?: any): Promise<any> {
@@ -68,17 +67,9 @@ export class CatalogueItemApiProvider implements CatalogueItemProviderInterface 
       const attributes = this.client.get(`${this.attributesEndpoint}/${id}`);
       const categories = this.client.get(`${this.categoriesEndpoint}/${id}`);
       const reviews = this.client.get(`${this.endpoint}/${id}/reviews`);
+
       forkJoin([product, attributes, categories, reviews]).subscribe(response => {
-        const model: CatalogueItem = new CatalogueItem();
-        model.productId = response[0].product_id;
-        model.name = response[0].name;
-        model.description = response[0].description;
-        model.price = response[0].price;
-        model.image = response[0].image;
-        model.image2 = response[0].image_2;
-        model.discountedPrice = response[0].discounted_price;
-        model.thumbnail = response[0].thumbnail;
-        model.display = response[0].display;
+        const model: CatalogueItem = new CatalogueItem(response[0]);
         const sizes: Array<{ key: string, value: any }> = [];
         const colors: Array<{ key: string, value: any }> = [];
         const productCategories: Array<{ categoryId: string, name: string }> = [];
@@ -100,6 +91,7 @@ export class CatalogueItemApiProvider implements CatalogueItemProviderInterface 
             categoryId: item.category_id, name: item.name
           });
         });
+
         model.colors = colors;
         model.sizes = sizes;
         model.categories = productCategories;
@@ -160,7 +152,7 @@ export class CatalogueItemApiProvider implements CatalogueItemProviderInterface 
       try {
         this.client
           .create(`${this.endpoint}/${id}/reviews`, model)
-          .subscribe(response => {
+          .subscribe(() => {
             this.client.get(`${this.endpoint}/${id}/reviews`)
               .subscribe(result => {
                 resolve(result);
@@ -195,7 +187,7 @@ export class CatalogueItemApiProvider implements CatalogueItemProviderInterface 
         });
         resolve({sizes, colors});
       }, error => {
-        console.log(error);
+        console.log(error.message);
         reject(error);
       });
     });

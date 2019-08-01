@@ -35,7 +35,6 @@ export class ReviewService implements OnDestroy {
   }
 
   public calculateWeightedAverageVote(data?) {
-    console.log('Calculating weighted average');
     const groups = [];
     let arr;
 
@@ -57,8 +56,8 @@ export class ReviewService implements OnDestroy {
       sum += +key * items.length;
       count += items.length;
     });
+
     const response: number = sum / count;
-    console.log(response, sum, count);
     return (sum === 0 && count === 0) ? 0 : response;
   }
 }

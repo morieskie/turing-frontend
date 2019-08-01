@@ -5,8 +5,8 @@ import {OrderService} from '../order/service/order.service';
 import {Order} from '../order/model/order';
 import {ShippingModel} from './model/shipping.model';
 import {TaxModel} from './model/tax.model';
-import {TaxService} from "./service/tax.service";
-import {ShippingMethodService} from "./service/shipping-method.service";
+import {TaxService} from './service/tax.service';
+import {ShippingMethodService} from './service/shipping-method.service';
 
 @Component({
   selector: 'app-checkout-order-summary',
@@ -20,8 +20,7 @@ export class CheckoutOrderSummaryComponent implements OnInit, AfterViewInit {
   @Input()
   public tax: TaxModel;
 
-  constructor(private route: ActivatedRoute,
-              public router: Router,
+  constructor(public router: Router,
               public storageService: StorageService,
               public orderService: OrderService,
               public taxService: TaxService,
@@ -33,7 +32,6 @@ export class CheckoutOrderSummaryComponent implements OnInit, AfterViewInit {
     });
 
     this.taxService.getTaxObservable().subscribe(next => {
-      console.log('this.tax = next;', next)
       this.tax = next;
       this.order.tax = this.tax.toJson();
       this.orderService.setCurrentOrder(this.order);
@@ -51,6 +49,5 @@ export class CheckoutOrderSummaryComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    console.log('view after init...');
   }
 }

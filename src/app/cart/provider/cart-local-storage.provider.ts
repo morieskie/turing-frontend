@@ -29,7 +29,7 @@ export class CartLocalStorageProvider implements CartProviderInterface {
     this.storage.setItem('cart', model.toJson);
 
     this.cart = new Promise((resolve, reject) => {
-      const data: any = this.storage.getItem('cart');
+      const data: any = this.storage.getItem('cart').catch(error => reject(error));
       const cart: Cart = new Cart(data).toJson();
       resolve(cart);
     });
@@ -45,7 +45,6 @@ export class CartLocalStorageProvider implements CartProviderInterface {
     this.cart = new Promise((resolve, reject) => {
       this.storage.getItem(id.toString())
         .then(data => {
-          console.log(data);
           const cart: Cart = new Cart(data);
           cart.items = data.items;
           console.log('show.cart.data', cart);
@@ -72,7 +71,7 @@ export class CartLocalStorageProvider implements CartProviderInterface {
    */
   public remove(id: string | number): Promise<boolean> {
     return new Promise((resolve, reject) => {
-      this.storage.removeItem('cart');
+      this.storage.removeItem('cart').catch(error => reject(error));
       resolve(true);
     });
   }

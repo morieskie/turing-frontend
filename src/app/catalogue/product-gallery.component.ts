@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
-import {CatalogueItem, CatalogueItemInterface} from './model/catalogue-item';
-import {environment} from "../../environments/environment";
+import {CatalogueItem} from './model/catalogue-item';
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-product-gallery',
@@ -26,6 +26,7 @@ export class ProductGalleryComponent implements OnInit, AfterViewInit {
     // @ts-ignore
     const jQuery = window.jQuery;
     const productCorousel = jQuery('.product-carousel');
+
     productCorousel.owlCarousel({
       items: 1,
       loop: !1,

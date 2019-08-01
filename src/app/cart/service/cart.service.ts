@@ -1,13 +1,12 @@
-import {Injectable, OnDestroy, OnInit} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Cart} from '../model/cart';
 import {CartRepository} from '../repository/cart.repository';
 import {CartItem} from '../model/cart-item';
 import {CartItemService} from './cart-item.service';
-import {BehaviorSubject, Subject} from 'rxjs';
+import {BehaviorSubject} from 'rxjs';
 import {Observable} from 'rxjs';
 import {StorageService} from '../../storage/service/storage.service';
 import {CartApiRepository} from '../repository/cart-api.repository';
-import {RestService} from '../../api/Rest.service';
 
 @Injectable()
 export class CartService {
@@ -15,7 +14,7 @@ export class CartService {
   public model: Cart;
 
   constructor(private repository: CartRepository, private cartApiRepository: CartApiRepository,
-              public cartItemService: CartItemService, private storage: StorageService, private restService: RestService) {
+              public cartItemService: CartItemService, private storage: StorageService) {
     this.refreshCart();
     this.modelSubject.subscribe(next => this.model = next);
   }
@@ -28,13 +27,13 @@ export class CartService {
           const cart: Cart = new Cart();
           cart.cartId = response.cartId;
           cart.items = response.items || [];
-          console.log('refreshCart.cart', cart);
           if (typeof cart.cartId !== 'undefined') {
             if (cart) {
               this.model = cart;
               this.modelSubject.next(this.model);
             }
           } else {
+
             this.create(new Cart()).then(result => {
               console.log('Created new CART', result);
               if (result) {
@@ -46,7 +45,7 @@ export class CartService {
               }
             }).catch(error => console.log(error.message));
           }
-          console.log('refreshing cart then1', response);
+
         } catch (e) {
           console.log(e);
         }
@@ -79,7 +78,8 @@ export class CartService {
         cart.cartId = result.cart_id;
         cart.items = [];
         return cart;
-      }).then(result => this.storage.setItem('currentCart', result.toJson())
+      })
+      .then(result => this.storage.setItem('currentCart', result.toJson())
         .then(response => {
           this.modelSubject.next(response);
           return response;
@@ -110,7 +110,6 @@ export class CartService {
   }
 
   public addToCart(model: CartItem) {
-    console.log('CartService.addToCart');
     return this.cartItemService.getApiRepository().create(model)
       .then(response => {
         this.handleItemsResponse(response, model);
@@ -120,7 +119,6 @@ export class CartService {
   public updateCartItem(model: CartItem): Promise<boolean> {
     return this.cartItemService.getApiRepository().update(model.itemId, model)
       .then(response => {
-        console.log('CartService.addToCart', response);
         this.handleItemsResponse(response, model);
         // this.refreshCart();
         return response;
@@ -130,13 +128,12 @@ export class CartService {
   public removeCartItem(model: CartItem): Promise<boolean> {
     return this.cartItemService.getApiRepository().remove(model.itemId)
       .then(response => {
-        console.log(this.model);
         this.handleItemsResponse(this.model.toJson().items.filter(item => item.itemId !== model.itemId), model);
         // this.refreshCart();
         return response;
       })
       .catch(error => {
-        console.log(error);
+        console.log(error.message);
         this.handleItemsResponse(this.model.toJson().items.filter(item => item.itemId !== model.itemId), model);
         return false;
       });
@@ -157,7 +154,6 @@ export class CartService {
       const totalPromises = model.items.length - 1;
 
       model.items.forEach((item, index) => this.removeCartItem(item).then(() => {
-        console.log(index, ' === ', totalPromises);
         if (index === totalPromises) {
           resolve(true);
         }
@@ -167,9 +163,5 @@ export class CartService {
 
   setCurrentCart(cart: Cart) {
     this.modelSubject.next(cart);
-  }
-
-  generateUniqueId(): Promise<{ cart_id: string }> {
-    return this.repository.generateUniqueId();
   }
 }

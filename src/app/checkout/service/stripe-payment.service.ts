@@ -12,7 +12,6 @@ export class StripePaymentService {
     return new Promise((resolve, reject) => {
       this.client.create(`stripe/token`, card)
         .subscribe(response => {
-          console.log('STRIPE_TOKEN_CREATED', response);
           resolve(response);
         }, error => reject(error));
 
@@ -23,7 +22,6 @@ export class StripePaymentService {
     return new Promise((resolve, reject) => {
       this.client.create(`stripe/charge`, model)
         .subscribe(response => {
-          console.log('STRIPE_CHARGE_CREATED', response);
           resolve(response);
         }, error => reject(error));
 

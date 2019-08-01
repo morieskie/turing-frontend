@@ -9,12 +9,10 @@ const catalogueRoutes: Routes = [
   {
     path: '',
     component: CatalogueComponent,
-     // canActivate: [AuthGuard]
   },
   {
     path: 'product/:productId',
     component: CatalogueItemDetailComponent,
-    // canActivate: [AuthGuard]
   },
   {
     path: 'catalogue',

@@ -30,7 +30,6 @@ export class CheckoutPaymentComponent implements OnInit, AfterViewInit {
 
   onSubmit() {
     this.throbberService.activate();
-    console.log('SUMITTED_VALUES', this.model);
     this.storageService.setItem('cardDetails', this.model.toJson())
       .then(() => 'Saved card details');
     this.stripeService.createStripeToken(this.model.toSnakeCase())
@@ -60,10 +59,6 @@ export class CheckoutPaymentComponent implements OnInit, AfterViewInit {
         }
       });
   }
-
-  // onContinue() {
-  //
-  // }
 
   ngAfterViewInit(): void {
     // @ts-ignore

@@ -28,10 +28,8 @@ export class CatalogueSidebarSizeFilterComponent implements OnInit {
   }
 
   onFilterBySize(event) {
-    // this.selected = event.target.form.querySelectorAll('input[type=checkbox]:checked').map(item => item.value);
     const list: NodeList = event.target.form.querySelectorAll('input[type=checkbox]:checked');
     this.selected = Object.keys(list).map(item => list[item].value);
-    console.log('this.selected 2', this.selected);
     return this.router.navigate([], {queryParams: {size: [this.selected]}, queryParamsHandling: 'merge'})
       .then(() => console.log('Price range applied'));
   }

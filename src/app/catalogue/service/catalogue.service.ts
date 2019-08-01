@@ -12,7 +12,6 @@ export class CatalogueService {
   public models: Catalogue[];
 
   constructor(private repository: CatalogueRepository) {
-   // this.model = this.create(new Catalogue());
   }
 
   public get collection() {

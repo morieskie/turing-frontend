@@ -2,8 +2,8 @@ import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Customer} from './model/customer';
 import {CustomerService} from './service/customer.service';
 import {Router} from '@angular/router';
-import {StorageService} from "../storage/service/storage.service";
-import {NotificationService} from "../throbber/service/notification.service";
+import {StorageService} from '../storage/service/storage.service';
+import {NotificationService} from '../throbber/service/notification.service';
 
 @Component({
   templateUrl: './template/customer-profile.component.html',
