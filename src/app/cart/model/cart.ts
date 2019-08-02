@@ -24,7 +24,7 @@ export class Cart extends BaseModel {
     this._items = values.map(item => {
       // item.productId = item.product_id;
       // item.itemId = item.item_id;
-      return new CartItem(item).toJson();
+      return new CartItem(item);
     });
   }
 

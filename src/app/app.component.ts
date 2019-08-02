@@ -8,7 +8,8 @@ import {OrderService} from './order/service/order.service';
 import {AuthService} from './auth/service/auth.service';
 import {CustomerService} from './customer/service/customer.service';
 import {Router} from '@angular/router';
-import {Order} from "./order/model/order";
+import {Order} from './order/model/order';
+import {OrderItem} from "./order/model/order-item";
 
 @Component({
   selector: 'app-root',
@@ -32,6 +33,12 @@ export class AppComponent implements AfterViewInit, OnInit {
   public order: Order;
 
   public queryString: string;
+  public items: OrderItem[];
+  public subtotal: number;
+  public checkoutTotal: number;
+  public estimatedTax: number;
+  public shippingCost: number;
+  public totalAmount: number;
 
   constructor(private storageService: StorageService,
               public cartService: CartService,
@@ -102,6 +109,19 @@ export class AppComponent implements AfterViewInit, OnInit {
   ngOnInit(): void {
     // @ts-ignore
     window.onReady();
+
+    this.customerService.getOrderViewObservable().subscribe(next => {
+      if (next && next.shipping && next.tax && next.items) {
+        this.order = next;
+        console.log('====',next, '====')
+        this.items = this.order.items.map(item => item);
+        this.subtotal = this.order.subtotal;
+        this.checkoutTotal = this.order.checkoutTotal;
+        this.totalAmount = this.order.totalAmount;
+        this.estimatedTax = this.order.estimatedTax;
+        this.shippingCost = parseFloat(this.order.shipping.shippingCost);
+      }
+    });
   }
 
   onLogout() {

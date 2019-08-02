@@ -40,7 +40,7 @@ export class CartItemApiProvider implements CartItemProviderInterface {
   public update(id: string | number, cartItem: CartItem): Promise<any> {
     return new Promise((resolve, reject) => {
       this.client
-        .update(`${this.endpoint}/update/${id}`, cartItem)
+        .update(`${this.endpoint}/update/${id}`, cartItem.toSnakeCase())
         .subscribe(response => {
           const data: { quantity: number } = response;
           resolve(data);

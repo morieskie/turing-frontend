@@ -1,16 +1,17 @@
 import {OrderItem} from './order-item';
 import {BaseModel} from '../../api/model/base.model';
-import {TaxModel} from "../../checkout/model/tax.model";
-import {ShippingModel} from "../../checkout/model/shipping.model";
+import {TaxModel} from '../../checkout/model/tax.model';
+import {ShippingModel} from '../../checkout/model/shipping.model';
+import {CatalogueItem} from "../../catalogue/model/catalogue-item";
 
 export class Order extends BaseModel {
   [x: string]: any;
 
-  public get orderId(): string | number {
+  public get orderId(): number {
     return this._orderId;
   }
 
-  public set orderId(value: string | number) {
+  public set orderId(value: number) {
     this._orderId = value;
   }
 
@@ -91,15 +92,19 @@ export class Order extends BaseModel {
   }
 
   public set shipping(value: ShippingModel) {
-    this._shipping = value;
+    this._shipping = new ShippingModel(value);
   }
 
   public get items(): OrderItem[] {
-    return this._items;
+    return this._items || [];
   }
 
   public set items(value: OrderItem[]) {
-    this._items = value;
+    // console.log('LOGGING_SOME_WIERD_THING', value);
+
+    // @ts-ignore
+    const data = !Array.isArray(value) && (value instanceof Object) ? Object.values(value) : value;
+    this._items = (data || []).map(item => new OrderItem(item));
   }
 
   public get tax(): TaxModel {
@@ -107,33 +112,55 @@ export class Order extends BaseModel {
   }
 
   public set tax(value: TaxModel) {
-    this._tax = value;
+    this._tax = new TaxModel(value);
   }
 
   public get estimatedTax(): number {
-    return parseFloat(this.caltulateTax().toFixed(2));
+    return parseFloat(this.calculateEstimatedTax().toFixed(2));
+  }
+
+  public get subtotal() {
+    let subtotal = 0;
+
+    if (this.cart) {
+      this.items = this.cart.items;
+    }
+
+    this.items.forEach(item => {
+      subtotal = subtotal + parseFloat(item.subtotal)
+    });
+
+    return subtotal;
   }
 
   public get checkoutTotal(): number {
-    console.log('checkoutTotal',this.shipping, this.totalAmount, this.estimatedTax, this.caltulateTax())
-    return this.shipping && this.shipping.shippingCost ?
-      this.totalAmount + parseFloat(this.shipping.shippingCost) + this.estimatedTax :
-      this.totalAmount + this.estimatedTax;
+    let checkoutTotal = this.subtotal;
+    if (this.shipping && this.shipping.shippingCost) {
+      checkoutTotal += parseFloat(this.shipping.shippingCost);
+    }
+
+    checkoutTotal += this.estimatedTax;
+
+    return checkoutTotal;
   }
 
-  caltulateTax() {
-    let response = 0;
-    const shippingCost = this.shipping.shippingCost || this.shippingCost;
-    console.log('this.shipping',this.shipping);
-    console.log('shippingCost',shippingCost);
-    console.log('this.totalAmount',this.totalAmount);
-    console.log('this.tax',this.tax);
-    if (!isNaN(shippingCost)) {
-      response = ((this.totalAmount + parseFloat(shippingCost)) * parseFloat(this.tax.taxPercentage)) / 100;
-    } else if (this.totalAmount && this.tax) {
-      response = (this.totalAmount * parseFloat(this.tax.taxPercentage)) / 100;
+  calculateEstimatedTax() {
+
+    let subtotal = 0.00;
+    let taxPercentage = 0.00;
+    let shippingCost = 0.00;
+
+    if (this.subtotal && this.shipping && this.shipping.shippingCost && this.tax && this.tax.taxPercentage) {
+      subtotal = this.subtotal;
+      taxPercentage = parseFloat(this.tax.taxPercentage);
+      shippingCost = parseFloat(this.shipping.shippingCost);
+    } else if (this.totalAmount && this.tax && this.tax.taxPercentage) {
+      subtotal = this.subtotal;
+      // console.log('______________________', this.subtotal)
+      taxPercentage = parseFloat(this.tax.taxPercentage);
     }
-    return response;
+
+    return (subtotal + shippingCost) * taxPercentage / 100;
   }
 
 }

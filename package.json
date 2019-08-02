@@ -11,9 +11,12 @@
   },
   "private": true,
   "dependencies": {
+    "@angular-devkit/build-angular": "~0.801.0",
     "@angular/animations": "~8.1.0",
+    "@angular/cli": "~8.1.0",
     "@angular/common": "~8.1.0",
     "@angular/compiler": "~8.1.0",
+    "@angular/compiler-cli": "~8.1.0",
     "@angular/core": "~8.1.0",
     "@angular/forms": "~8.1.0",
     "@angular/platform-browser": "~8.1.0",
@@ -39,10 +42,7 @@
     "tslib": "^1.9.0",
     "uikit": "^3.1.6",
     "velocity-animate": "^2.0.5",
-    "zone.js": "~0.9.1",
-    "@angular-devkit/build-angular": "~0.801.0",
-    "@angular/cli": "~8.1.0",
-    "@angular/compiler-cli": "~8.1.0"
+    "zone.js": "~0.9.1"
   },
   "devDependencies": {
     "@angular/language-service": "~8.1.0",

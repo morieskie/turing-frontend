@@ -1,5 +1,12 @@
 <!-- Open Ticket Modal-->
-<app-order-details-modal *ngIf="order" [order]="order"></app-order-details-modal>
+<app-order-details-modal *ngIf="order&&order.shipping&&order.tax&&order.items"
+                         [order]="order"
+                         [items]="order.items"
+                         [shippingCost]="shippingCost"
+                         [totalAmount]="totalAmount"
+                         [subtotal]="subtotal"
+                         [checkoutTotal]="checkoutTotal"
+                         [estimatedTax]="estimatedTax"></app-order-details-modal>
 
 <!-- Off-Canvas Category Menu-->
 <div class="offcanvas-container d-none" id="shop-categories">
@@ -623,7 +630,7 @@
           <ul class="toolbar-dropdown">
             <li class="sub-menu-user">
               <div class="user-ava">
-<!--                <img src="./assets/img/account/user-ava-sm.jpg" alt="{{username}}">-->
+                <!--                <img src="./assets/img/account/user-ava-sm.jpg" alt="{{username}}">-->
               </div>
               <div class="user-info">
                 <h6 class="user-name">{{username}}</h6>

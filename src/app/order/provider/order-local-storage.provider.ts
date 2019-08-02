@@ -19,7 +19,7 @@ export class OrderLocalStorageProvider implements OrderProviderInterface {
    * Create order
    */
   public create(order: Order): Promise<Order> {
-    return this.storage.setItem('order', new Order(order).toJson());
+    return this.storage.setItem('order', order.toJson());
   }
 
   /**
@@ -33,7 +33,7 @@ export class OrderLocalStorageProvider implements OrderProviderInterface {
    * Update Order
    */
   public update(id: string | number, order: Order): Promise<boolean> {
-    return  this.storage.setItem('order', order.toJson);
+    return  this.storage.setItem('order', order.toJson());
   }
 
   /**

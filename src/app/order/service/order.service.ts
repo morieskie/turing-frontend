@@ -1,11 +1,15 @@
 import {Injectable, OnDestroy, OnInit} from '@angular/core';
 import {Order} from '../model/order';
 import {OrderRepository} from '../repository/order.repository';
-import {BehaviorSubject, Subject} from 'rxjs';
+import {BehaviorSubject, forkJoin, Subject} from 'rxjs';
 import {Observable} from 'rxjs';
 import {OrderLocalStorageProvider} from '../provider/order-local-storage.provider';
 import {Subscription} from 'rxjs';
 import {CartService} from '../../cart/service/cart.service';
+import {OrderItem} from "../model/order-item";
+import {RestService} from "../../api/Rest.service";
+import {CategoryModel} from "../../catalogue/model/category.model";
+import {CatalogueItem} from "../../catalogue/model/catalogue-item";
 
 @Injectable()
 export class OrderService implements OnDestroy {
@@ -17,11 +21,11 @@ export class OrderService implements OnDestroy {
 
   constructor(private repository: OrderRepository,
               public orderStorageProvider: OrderLocalStorageProvider,
-              public cartService: CartService) {
+              public client: RestService) {
     console.log('OrderService.constructor');
     this.modelSubscription = this.getOrderObservable().subscribe(value => {
       console.log('ORDER:', value);
-      this.model = value;
+     // this.model = value;
     });
     this.orderDetailSubscription = this.getOrderDetailObservable().subscribe(value => {
       console.log('ORDER_DETAIL:', value);
@@ -63,7 +67,7 @@ export class OrderService implements OnDestroy {
   public getCurrentOrder(): Promise<Order> {
     return this.orderStorageProvider.show('order')
       .then(response => {
-        this.setCurrentOrder(response);
+        this.setCurrentOrder(new Order(response));
         console.log('Loaded order from storage:', response);
         return response;
       });
@@ -75,6 +79,35 @@ export class OrderService implements OnDestroy {
         this.modelSubject.next(response);
       }
       return response;
+    });
+
+  }
+
+  public getOrderDetails(orderId: number): Promise<Order> {
+    return new Promise<Order>((resolve, reject) => {
+      this.client.get(`orders/${orderId}/detailed`).subscribe(response => {
+        resolve(new Order(response));
+      });
+    });
+
+  }
+
+  public getOrderItems(orderId: number): Promise<OrderItem[]> {
+    return new Promise<OrderItem[]>((resolve, reject) => {
+      this.client.get(`orders/${orderId}`).subscribe(response => {
+        let items = response.map(item => new OrderItem(item));
+        const bulk: Observable<CatalogueItem>[] = items.map(item => this.client.get(`products/${item.productId}`));
+
+        forkJoin(bulk).subscribe(result => {
+          console.log(result)
+          items = items.forEach((item, index) => {
+            item.thumbnail = result[index].thumbnail;
+          });
+        });
+        console.log('CONSTRUCTED_ITEMS', items)
+
+        resolve(items);
+      }, error => reject(error));
     });
 
   }
@@ -114,7 +147,7 @@ export class OrderService implements OnDestroy {
   }
 
   setCurrentOrder(model: Order) {
-    console.log('this:' + model.totalAmount);
+   // console.log('this:' + model.totalAmount);
     this.orderStorageProvider.create(model).then(result => console.log('UPDATED ORDER:', result));
     this.modelSubject.next(model);
   }

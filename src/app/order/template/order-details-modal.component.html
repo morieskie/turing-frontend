@@ -2,7 +2,7 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Order No  - {{order.orderId}}</h4>
+        <h4 class="modal-title">Order No - {{order.orderId}}</h4>
         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -17,16 +17,17 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let item of order.items">
+            <tr *ngFor="let item of items">
               <td>
                 <div class="product-item">
                   <a class="product-thumb" [routerLink]="['/product',item.productId]">
-                    <img src="./assets/img/shop/cart/01.jpg" alt="{{item.name}}">
+                    <img [src]="productImageFolder+item.product.thumbnail" alt="{{item.productName}}">
                   </a>
                   <div class="product-info">
                     <h4 class="product-title">
                       <a [routerLink]="['/product',item.productId]">
-                        {{item.name}}<small>x {{item.quantity}}</small>
+                        {{item.productName}}
+                        <small>x {{item.quantity}}</small>
                       </a>
                     </h4>
                     <span><em>Size:</em> {{item.attributes.split(', ')[0]}}</span>
@@ -34,39 +35,18 @@
                   </div>
                 </div>
               </td>
-              <td class="text-center text-lg text-medium">{{item.subtotal}}</td>
-            </tr>
-            <tr>
-              <td>
-                <div class="product-item"><a class="product-thumb" href="#">
-                  <img src="img/shop/cart/02.jpg" alt="Product">
-                </a>
-                  <div class="product-info">
-                    <h4 class="product-title"><a href="#">Daily Fabric Cap<small>x 2</small></a></h4><span><em>Size:</em> XL</span><span><em>Color:</em> Black</span>
-                  </div>
-                </div>
-              </td>
-              <td class="text-center text-lg text-medium">$24.89</td>
-            </tr>
-            <tr>
-              <td>
-                <div class="product-item"><a class="product-thumb" href="#"><img src="img/shop/cart/03.jpg" alt="Product"></a>
-                  <div class="product-info">
-                    <h4 class="product-title"><a href="#">Cole Haan Crossbody<small>x 1</small></a></h4><span><em>Size:</em> -</span><span><em>Color:</em> Turquoise</span>
-                  </div>
-                </div>
-              </td>
-              <td class="text-center text-lg text-medium">$200.00</td>
+              <td class="text-center text-lg text-medium">{{item.subtotal | number: '1.2'}}</td>
             </tr>
             </tbody>
           </table>
         </div>
         <hr class="mb-3">
         <div class="d-flex flex-wrap justify-content-between align-items-center pb-2">
-          <div class="px-2 py-1">Subtotal: <span class='text-medium'>{{order.totalAmount}}</span></div>
-          <div class="px-2 py-1">ShippingModel: <span class='text-medium'>{{order.shippingCost}}</span></div>
-          <div class="px-2 py-1">Tax: <span class='text-medium'>$3.42</span></div>
-          <div class="text-lg px-2 py-1">Total: <span class='text-medium'>$315.60</span></div>
+          <div class="px-2 py-1">Subtotal: <span class='text-medium'>{{subtotal | number :'1.2'}}</span></div>
+          <div class="px-2 py-1">ShippingModel: <span class='text-medium'>{{shippingCost | number: '1.2'}}</span></div>
+          <div class="px-2 py-1">Tax: <span class='text-medium'>{{estimatedTax | number: '1.2' }}</span></div>
+          <div class="text-lg px-2 py-1">Total: <span class='text-medium'>{{checkoutTotal | number: '1.2' }}</span>
+          </div>
         </div>
       </div>
     </div>

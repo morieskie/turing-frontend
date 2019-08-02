@@ -12,6 +12,7 @@ import {NotificationService} from '../throbber/service/notification.service';
 import {ThrobberService} from '../throbber/throbber.service';
 import {TaxService} from './service/tax.service';
 import {TaxModel} from './model/tax.model';
+import {environment} from "../../environments/environment";
 
 @Component({
   templateUrl: './template/checkout-review.component.html'
@@ -23,6 +24,7 @@ export class CheckoutReviewComponent implements OnInit {
   public address: string;
   public cardNumber: string;
   private tax: TaxModel;
+  public productImageFolder = `${environment.paths.catalogueImagesPath}`;
 
   constructor(public router: Router,
               public cartService: CartService,
@@ -33,7 +35,10 @@ export class CheckoutReviewComponent implements OnInit {
               public notificationService: NotificationService,
               public throbberService: ThrobberService) {
 
-    this.taxService.getTax().then(tax => this.tax = tax);
+    this.taxService.getTax().then(tax => {
+      this.tax = tax;
+      this.taxService.setTax(tax);
+    });
   }
 
   ngOnInit() {
@@ -66,7 +71,7 @@ export class CheckoutReviewComponent implements OnInit {
       this.order.cartId = this.model.cartId;
       this.order.tax = this.tax;
 
-      this.storageService.setItem('order', this.order)
+      this.storageService.setItem('order', this.order.toJson())
         .then(() => this.orderService.setCurrentOrder(this.order));
     });
   }

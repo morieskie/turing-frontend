@@ -36,24 +36,28 @@ export class CheckoutComponent implements OnInit {
     });
 
     this.cartService.getCurrentCart().then(item => {
-      this.cart = item;
-      this.storageService.getItem('order').then(orderItem => {
-        this.order = new Order(orderItem);
-        this.order.totalAmount = this.cart.cartTotal;
-        this.order.cart = this.cart;
-        this.order.cartId = this.cart.cartId;
+      this.cart = new Cart(item);
 
-        this.orderService.setCurrentOrder(this.order);
+      console.log('CART_TO_ORDER', this.cart.toJson());
 
-        this.storageService.getItem('shippingOptions').then(options => {
-          this.shipping = options.filter(opt => opt.shippingId === orderItem.shippingId)[0];
-          if (!this.shipping) {
-            this.shipping = options[0];
-          }
-        }).catch(() => {
-        });
-      }).catch(() => {
-      });
+
+      // this.storageService.getItem('order').then(orderItem => {
+      //   this.order = new Order(orderItem);
+      //   this.order.totalAmount = this.cart.cartTotal;
+      //   this.order.cart = this.cart;
+      //   this.order.cartId = this.cart.cartId;
+      //
+      //   this.orderService.setCurrentOrder(this.order);
+      //
+      //   this.storageService.getItem('shippingOptions').then(options => {
+      //     this.shipping = options.filter(opt => opt.shippingId === orderItem.shippingId)[0];
+      //     if (!this.shipping) {
+      //       this.shipping = options[0];
+      //     }
+      //   }).catch(() => {
+      //   });
+      // }).catch(() => {
+      // });
     });
   }
 

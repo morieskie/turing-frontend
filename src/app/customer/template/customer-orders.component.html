@@ -11,7 +11,8 @@
     <tbody>
     <tr *ngFor="let item of orders">
       <td>
-        <a class="text-medium navi-link" href="#" data-toggle="modal" data-target="#orderDetails">{{item.orderId}}</a>
+        <a class="text-medium navi-link" [routerLink]="['/customer/orders']"
+        (click)="onOrderView(item)">{{item.orderId}}</a>
       </td>
       <td>{{item.createdOn | date}}</td>
       <td><span class="text-danger">{{item.status}}</span></td>
@@ -21,7 +22,7 @@
   </table>
 </div>
 <hr>
-<div class="text-right">
+<div class="text-right d-none">
   <a class="btn btn-link-primary margin-bottom-none" href="#">
     <i class="icon-download"></i>&nbsp;Order Details
   </a>

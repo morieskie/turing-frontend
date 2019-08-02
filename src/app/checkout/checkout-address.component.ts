@@ -9,10 +9,10 @@ import {OrderService} from '../order/service/order.service';
 import {Order} from '../order/model/order';
 import {Customer} from '../customer/model/customer';
 import {ShippingRegion} from './model/shipping-region';
-import {CartService} from "../cart/service/cart.service";
-import {Cart} from "../cart/model/cart";
-import {TaxService} from "./service/tax.service";
-import {TaxModel} from "./model/tax.model";
+import {CartService} from '../cart/service/cart.service';
+import {Cart} from '../cart/model/cart';
+import {TaxService} from './service/tax.service';
+import {TaxModel} from './model/tax.model';
 
 @Component({
   templateUrl: './template/checkout-address.component.html'
@@ -34,7 +34,10 @@ export class CheckoutAddressComponent implements OnInit, AfterViewInit {
               public cartService: CartService,
               public taxService: TaxService) {
 
-    this.taxService.getTax().then(tax => this.tax = tax)
+    this.taxService.getTax().then(tax => {
+      this.tax = tax;
+      this.taxService.setTax(tax);
+    });
 
     this.shippingRegionService.getShippingRegions().then(regions => {
       // @ts-ignore
@@ -60,6 +63,9 @@ export class CheckoutAddressComponent implements OnInit, AfterViewInit {
     this.cartService.getCurrentCart().then(item => {
       this.cart = item;
     });
+
+
+    this.orderService.getOrderObservable().subscribe(next => this.order = next);
   }
 
   ngOnInit() {
@@ -80,6 +86,9 @@ export class CheckoutAddressComponent implements OnInit, AfterViewInit {
 
   onSubmit() {
     this.setCurrentCreateOrder();
+    console.log('ON_SUBMIT_SHIPPING_ADDRESS', this.order);
+    //return false;
+    // this.setCurrentCreateOrder();
     this.addressService.update(this.formModel).then(result => {
       const pieces = location.pathname.split('/');
       const data: Customer = new Customer(result);
@@ -87,7 +96,7 @@ export class CheckoutAddressComponent implements OnInit, AfterViewInit {
       this.order.customer = data.toJson();
       this.order.tax = this.tax;
 
-      this.storageService.setItem('order', this.order)
+      this.storageService.setItem('order', this.order.toJson())
         .then(() => {
           this.orderService.setCurrentOrder(this.order);
         });
@@ -108,14 +117,19 @@ export class CheckoutAddressComponent implements OnInit, AfterViewInit {
   public setCurrentCreateOrder() {
     this.orderService.getCurrentOrder().then(order => {
       this.order = new Order(order);
-
+      this.order.customer = this.customer;
+      this.order.totalAmount = this.cart.cartTotal;
+      this.order.cart = this.cart;
+      this.order.cartId = this.cart.cartId;
+      this.order.tax = this.tax;
       this.orderService.setCurrentOrder(this.order);
 
     }).catch(() => this.orderService.setCurrentOrder(new Order({
-      customer: this.customer.toJson(),
+      customer: this.customer,
       totalAmount: this.cart.cartTotal,
       cart: this.cart,
       cartId: this.cart.cartId,
+      tax: this.tax
     })));
   }
 }

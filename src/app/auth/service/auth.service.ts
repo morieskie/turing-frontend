@@ -70,11 +70,14 @@ export class AuthService {
       .then(() => {
         this.socialAuthService.signOut().catch(error => console.log(error.message));
       })
-      .catch(() => {});
+      .catch(() => {
+      });
 
-    this.storageService.removeItem('cardDetails').catch(() => {});
+    this.storageService.removeItem('cardDetails').catch(() => {
+    });
 
-    this.storageService.removeItem('order').catch(() => {});
+    this.storageService.removeItem('order').catch(() => {
+    });
 
     this.currentUserSubject.next(null);
   }
@@ -86,9 +89,12 @@ export class AuthService {
         Object.assign(data, response.customer.schema);
         data.accessToken = response.accessToken;
         const customer: Customer = new Customer(data);
-        this.currentUserSubject.next(customer);
+
         this.storageService.setItem('currentUser', customer.toJson())
-          .then(() => console.log('USER SAVED TO LOCAL STORAGE', customer));
+          .then(() => {
+            this.currentUserSubject.next(customer);
+            console.log('USER SAVED TO LOCAL STORAGE', customer);
+          });
         return customer;
       });
   }

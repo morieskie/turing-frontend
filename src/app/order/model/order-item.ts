@@ -1,5 +1,6 @@
 import {OrderItemInterface} from '../interface/order-item.interface';
 import {BaseModel} from '../../api/model/base.model';
+import {CatalogueItem} from "../../catalogue/model/catalogue-item";
 
 export class OrderItem extends BaseModel implements OrderItemInterface {
   [x: string]: any;
@@ -36,6 +37,14 @@ export class OrderItem extends BaseModel implements OrderItemInterface {
     this._productName = value;
   }
 
+  get subtotal(): string {
+    return this._subtotal;
+  }
+
+  set subtotal(value: string) {
+    this._subtotal = value;
+  }
+
   get attributes(): string {
     return this._attributes;
   }
@@ -58,5 +67,13 @@ export class OrderItem extends BaseModel implements OrderItemInterface {
 
   set orderId(value: string | number) {
     this._orderId = value;
+  }
+
+  public get product(): CatalogueItem {
+    return this._product;
+  }
+
+  public set product(value: CatalogueItem) {
+    this._product = new CatalogueItem(value);
   }
 }

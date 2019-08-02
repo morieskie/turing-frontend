@@ -1,8 +1,8 @@
 export const environment = {
   production: true,
   appVersion: '1.0.1',
-  apiUrl: 'https://t-shirtshop-api.herokuapp.com/api',
+  apiUrl: 'http://localhost:7070/api',
   paths: {
-    catalogueImagesPath: `https://backendapi.turing.com/images/products/`
+    catalogueImagesPath: `./assets/img/product_images/`
   }
 };
