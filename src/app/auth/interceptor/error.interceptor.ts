@@ -15,9 +15,9 @@ export class ErrorInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(catchError(err => {
-      console.log(err, request.headers);
-      this.notificationService.error('Error', err.error.message, {
-        onClosed: () => {
+      console.log('ERROR_INTERCEPTOR', err.error.message, request.headers);
+      // this.notificationService.error('Error', err.error.message || err, {
+      //   onClosed: () => {
           if (err.status === 401) {
             // auto logout if 401 response returned from api
             this.authenticationService.logout();
@@ -33,8 +33,8 @@ export class ErrorInterceptor implements HttpInterceptor {
 
             this.route.navigate(['/login', {redirectUrl: location.pathname}]);
           }
-        }
-      });
+       // }
+      //});
 
       const error = err.error.message || err.statusText;
       return throwError(error);

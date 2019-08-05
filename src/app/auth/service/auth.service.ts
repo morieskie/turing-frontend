@@ -65,10 +65,10 @@ export class AuthService {
   }
 
   logout() {
+    this.socialAuthService.signOut(true).catch(error => console.log(error.message));
     // remove user from local storage to log user out
     this.storageService.removeItem(this.storageKey)
       .then(() => {
-        this.socialAuthService.signOut().catch(error => console.log(error.message));
       })
       .catch(() => {
       });

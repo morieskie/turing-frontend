@@ -51,7 +51,7 @@ The module is structured as follows:
 
 ## Project preview link
 
-The project can be accessed on [here](https://t-shirtshop.herokuapp.com/login)
+The project can be accessed on [here](https://t-shirtshop.herokuapp.com)
 
 ## Development server
 

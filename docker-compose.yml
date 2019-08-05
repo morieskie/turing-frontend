@@ -6,7 +6,7 @@ services:
     environment:
       - PORT=4200
     ports:
-      - '1339:4200'
+      - '4200:4200'
     expose:
       - '4200'
     volumes:

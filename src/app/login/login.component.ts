@@ -35,19 +35,19 @@ export class LoginComponent implements OnInit {
         this.service.facebookLogin(user.authToken)
           .then(result => {
             console.log('submitLogin.result', result);
-            this.service.getCurrentUserSubscription().next(new Customer(result));
-            this.notificationService.success('Success', `Logged in successfully`, {
-              onClosed: () => {
+            // this.service.getCurrentUserSubscription().next(new Customer(result));
+            // this.notificationService.success('Success', `Logged in successfully`, {
+            //   onClosed: () => {
                 this.router.navigate([this.returnUrl]);
-              }
-            });
+            //   }
+            // });
           });
       }
     });
   }
 
   submitLogin(event) {
-    event.preventDefault();
+    event.stopImmediatePropagation();
     console.log(this.loginModel);
     this.service.login(this.loginModel.email, this.loginModel.password)
       .then(result => {
@@ -60,6 +60,7 @@ export class LoginComponent implements OnInit {
         });
       })
       .catch(error => {
+        console.log(error)
         this.notificationService.error('Error', error);
       });
     return false;

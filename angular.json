@@ -29,7 +29,8 @@
             ],
             "styles": [
               "src/assets/css/vendor.min.css",
-              "src/assets/css/styles.min.css",
+              "node_modules/izitoast/dist/css/iziToast.min.css",
+              "node_modules/nouislider/distribute/nouislider.min.css",
               "src/styles.css"
             ],
             "scripts": [

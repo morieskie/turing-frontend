@@ -14,7 +14,7 @@ COPY . src
 WORKDIR src
 RUN npm i --production
 RUN npm rebuild node-sass
-RUN ng build
+RUN ng build --prod
 
 #  Release Stage
 # -----------------------------
